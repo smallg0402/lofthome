@@ -869,6 +869,25 @@ body{
     }
 
 } 
+//roomsbar得class不能放在<form>標籤
+//rooms頁搜尋bar
+    
+.roomsBar{
+    color:red;
+    form{
+        .form-group:nth-child(1),.form-group:nth-child(2){
+            width: 244px;
+        }
+        .form-group:nth-child(3),.form-group:nth-child(4){
+            width: 178px;
+        }
+        .bookroom-submit{
+            width: 132px;
+        }
+
+    }
+}
+
 
 //針對選擇日期框樣式
 .datepickSize{

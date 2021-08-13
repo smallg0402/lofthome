@@ -1743,6 +1743,22 @@ body {
   color: white;
 }
 
+.roomsBar {
+  color: red;
+}
+
+.roomsBar form .form-group:nth-child(1), .roomsBar form .form-group:nth-child(2) {
+  width: 244px;
+}
+
+.roomsBar form .form-group:nth-child(3), .roomsBar form .form-group:nth-child(4) {
+  width: 178px;
+}
+
+.roomsBar form .bookroom-submit {
+  width: 132px;
+}
+
 .datepickSize {
   height: 36px;
 }
