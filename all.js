@@ -3,11 +3,9 @@ const token = "xZoGaX0vKFy0k7zIXKmC1H6nzL7objbiVFPrxtx56DfV2frYa15HghW1TkLp";
 
 //獲取頁面節點
 const body = document.body;
-let index_room_list;
-let rooms_roomList;
+
 //共同節點
 const modal = document.querySelector(".modal");
-
 
 //modal視窗節點
 const modal_dialog = document.querySelector(".modal-dialog");
@@ -27,6 +25,11 @@ const bookKidsGroup = document.querySelectorAll(".bookKidsGroup");
 const bookAdults = document.querySelectorAll(".bookAdults");
 const bookKids = document.querySelectorAll(".bookKids");
 
+//首頁節點
+let index_room_list;
+//rooms頁節點
+let rooms_room_list;
+
 //booking 頁節點
 // const formBooking = document.querySelector("#formBooking");
 const bookName = document.querySelector("#bookName");
@@ -34,7 +37,8 @@ const bookPhone = document.querySelector("#bookPhone");
 const bookStartDate = document.querySelector("#bookStartDate");
 const bookEndDate = document.querySelector("#bookEndDate");
 
-//
+//頁面路徑
+let path = window.location.pathname ;
 //
 let roomsDetailArray = [];
 
@@ -44,8 +48,94 @@ let bookKidsNum = 0;
 
 //bookingId ;
 let bookingId;
+
+//切換不同網頁時抓取節點及取的遠端資料函式物件
+let getdata = {
+  pathDomEvent : function(){
+  if (path.indexOf("/index.html") != -1) {
+    index_room_list = document.querySelector(".index-room-list");
+    //首頁節點增加監聽器
+    index_room_list.addEventListener("click", function (e) {
+      e.preventDefault();
+      console.log(e.target.getAttribute("class"));
+      if (e.target.getAttribute("class").indexOf("roomCard") != -1) {
+        body.setAttribute("class", "open-modal");
+        let no = e.target.getAttribute("data-roomno");
+        modalRender(roomsDetailArray[no]);
+      }
+    });
+  } else if (path.indexOf("/rooms.html") != -1) {
+    //rooms節點
+    console.log(this);
+    rooms_roomList = document.querySelector(".rooms_roomList");
+    rooms_roomList.addEventListener("click", function (e) {
+      e.preventDefault();
+      console.log(e.target.getAttribute("class"));
+      if (e.target.getAttribute("class").indexOf("rooms-btn-more") != -1) {
+        body.setAttribute("class", "open-modal");
+        let no = e.target.getAttribute("data-roomno");
+        console.log(`roomno${no}`);
+        modalRender(roomsDetailArray[no]);
+      }
+    });
+  }
+  },
+  getData: function(){
+    axios
+    .get(`${url}rooms`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
+    })
+    .then((response) => {
+      let roomsdata = response.data.items;
+      let idArray = [];
+      roomsdata.forEach(function (item) {
+        idArray.push(item.id);
+        console.log(idArray);
+      });
+      getRoomsDetail(idArray[0])
+        .then((response) => {
+          return getRoomsDetail(idArray[1]);
+        })
+        .then((response) => {
+          return getRoomsDetail(idArray[2]);
+        })
+        .then((response) => {
+          return getRoomsDetail(idArray[3]);
+        })
+        .then((response) => {
+          return getRoomsDetail(idArray[4]);
+        })
+        .then((response) => {
+          return getRoomsDetail(idArray[5]);
+        })
+        .then((response) => {
+          console.log(roomsDetailArray);
+          //待所有房間的詳細資料皆載入後判斷為哪一個頁面再進行渲染
+          if (path.indexOf("/index.html") != -1) {
+            indexPageRender(roomsdata);
+          } else if (path.indexOf("/rooms.html") != -1) {
+            
+          }
+          roomsPageRender(roomsDetailArray);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  },
+  
+}
 //執行初始讀取資料
-getdata();
+getdata.getpath();
+getdata.getRoomData();
+getdata.which();
 
 //-------------訂房時間相關設定------------------
 
@@ -273,102 +363,7 @@ function booking() {
     });
 }
 
-//切換不同網頁時初始讀取資料函式
-function getdata() {
-  let path = window.location.pathname;
-  if(path.indexOf("/index.html") != -1){
-    this.index_room_list = document.querySelector(".index-room-list");
-    //首頁節點增加監聽器
-    this.index_room_list.addEventListener("click", function (e) {
-      e.preventDefault();
-      console.log(e.target.getAttribute("class"));
-      if (e.target.getAttribute("class").indexOf("roomCard") != -1) {
-        body.setAttribute("class", "open-modal");
-        let no = e.target.getAttribute("data-roomno");
-        modalRender(roomsDetailArray[no]);
-      }
-    });
-  }else if(path.indexOf("/rooms.html") != -1){
-    //rooms節點
-    this.rooms_roomList = document.querySelector(".rooms_roomList");
-    this.rooms_roomList.addEventListener("click", function (e) {
-      e.preventDefault();
-      console.log(e.target.getAttribute("class"));
-      if (e.target.getAttribute("class").indexOf("rooms-btn-more") != -1) {
-        body.setAttribute("class", "open-modal");
-        let no = e.target.getAttribute("data-roomno");
-        console.log(`roomno${no}`);
-        modalRender(roomsDetailArray[no]);
-      }
-    });
 
-
-  }
-  axios
-    .get(`${url}rooms`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-      },
-    })
-    .then((response) => {
-      let roomsdata = response.data.items;
-      let idArray = [];
-      roomsdata.forEach(function (item) {
-        idArray.push(item.id);
-        console.log(idArray);
-      });
-      getRoomsDetail(idArray[0])
-        .then((response) => {
-          return getRoomsDetail(idArray[1]);
-        })
-        .then((response) => {
-          return getRoomsDetail(idArray[2]);
-        })
-        .then((response) => {
-          return getRoomsDetail(idArray[3]);
-        })
-        .then((response) => {
-          return getRoomsDetail(idArray[4]);
-        })
-        .then((response) => {
-          return getRoomsDetail(idArray[5]);
-        })
-        .then((response) => {
-          console.log(roomsDetailArray);
-          //待所有房間的詳細資料皆載入後一次渲染
-          roomsRender(roomsDetailArray);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      indexRender(roomsdata);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  if (path.indexOf("/index.html") != -1) {
-    //取得首頁節點
-  } else if (path.indexOf("/rooms.html") != -1) {
-    axios
-      .get(`${url}rooms`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-      })
-      .then((response) => {
-        let roomsdata = response.data.items;
-        //由roomsdata各房間基本資料獲取id,用id去取得各房間的詳細資料
-        //此段程式碼需重構
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  } else if (path.indexOf("/booking.html") != -1) {
-    // booking();
-  }
-}
 //利用各房間id接收所有房間的詳細資料非同步函式
 // function reciveAllDetail(roomsdata){
 //   return new Promise(function(resolve,reject){
@@ -406,7 +401,7 @@ function getRoomsDetail(id) {
 }
 
 //首頁資料初始化
-function indexRender(roomsdata) {
+function indexPageRender(roomsdata) {
   //取得首頁房間列表節點
 
   //新增row列
@@ -418,8 +413,8 @@ function indexRender(roomsdata) {
     row_str += `<div class="indexRoomList-row row-5"></div>`;
   }
   //將列渲染至畫面上
-  
-  this.index_room_list.innerHTML = row_str;
+  console.log(this);
+  this.this.getdata.index_room_list.innerHTML = row_str;
   //取得所有的row節點
   let indexRoomList_row = document.querySelectorAll(".indexRoomList-row");
   console.log(`新增row${indexRoomList_row[0]}`);
@@ -487,7 +482,7 @@ function modalRender(roomDetail) {
   modal_roomBook.setAttribute("data-bookid", roomDetail.id);
 }
 //初始化rooms頁面資料
-function roomsRender(data) {
+function roomsPageRender(data) {
   let str = "";
   let roomNo = 0;
   //將所有資料進行加入渲染字串
@@ -582,7 +577,8 @@ function roomsRender(data) {
     roomNo++;
   });
   //進行第一次頁面渲染
-  rooms_roomList.innerHTML = str;
+  console.log(this);
+  this.getdata.rooms_roomList.innerHTML = str;
 
   //房間卡面中 房間設施圖案渲染
 
@@ -732,8 +728,6 @@ $(document).ready(function () {
 
 //首頁表單列表監聽
 
-
-
 $(document).ready(function () {
   $(".modal-close").click(function (e) {
     e.preventDefault();
@@ -742,7 +736,6 @@ $(document).ready(function () {
 });
 
 //rooms頁roomList監聽
-
 
 // $(document).ready(function(){
 //   $(".roomCard").click(function (e) {
