@@ -26,10 +26,6 @@
                 <li class="mr-10"><a href="rooms.html" class="text-dark">ROOMS</a></li>
                 <li class="mr-10"><a href="" class="text-dark">CONTACT</a></li>
             </ul>
-            <select name="lan" id="">
-                <option value="en">EN</option>
-                <option value="ch">CH</option>
-            </select>
         </div>
 
     </header>
@@ -106,7 +102,18 @@
     </section>
     <section class="index-room container container-5 mt-12">
         <h2 class="h1">Room type</h2>
-        <div class="index-room-list mt-5 text-light">
+        <div class="index-room-list mt-5 text-light relative">
+            <!-- 讀取圖示 -->
+            <div class="la-ball-spin-clockwise la-dark la-2x ">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
     </section>
     <footer class="footer bg-primary  mt-14 py-10">
         <div class="container d-flex">
@@ -153,7 +160,7 @@
                   </div>
                   <div class=" w-100 h-100 modal-swiper-text pt-45 pb-35 absolute ">
                      <div class="modal-dialog-container d-flex justify-content-between w-100 h-100">
-                      <h3 class="z-index-10 display-2">Single Room</h3>
+                      <h3 class="z-index-10 display-2 modal-roomName">Single Room</h3>
                       <ul class="align-self-end z-index-10">
                           <li class="display-2  d-flex align-items-center"><span class="small">平日每晚</span>$1,200</li>
                           <li class="display-2  mt-4 d-flex align-items-center"><span class="small">假日每晚</span>$1,200</li>
@@ -249,6 +256,7 @@
 
             <div class="mt-6 bg-third py-5 ">
                 <div class="d-flex modal-dialog-container">
+                    <!-- 在首頁的form會消失,why? -->
                     <form action="" class="">
                      <input type="date" name="inId" class="inDate form-control bg-light border-0 modal-input-control mr-3">
                      <input type="date" name="outId" class="outDate form-control bg-light border-0 modal-input-control mr-3">

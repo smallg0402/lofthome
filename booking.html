@@ -10,96 +10,57 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css' />
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="sass/all.css">
 </head>
 <body>
-    <header class="header px-28 py-22">
+    <header class="header px-28 py-22 border-bottom-1 border-primary">
         <div class="navbar pr-12">
-            <h1 class="navbar-logo mr-auto "><a href="index.html"><img src="img/logo@2x.png" alt="" class="lofthomeLogo">LOFT HOME</a></h1>
-                <ul class="navbar-list h3">
+            <h1 class="mr-auto imageReplace"><a href="index.html">LOFT HOME</a></h1>
+            <ul class="navbar-list h3">
                 <li class="mr-10"><a href="" class="text-dark">ABOUT US</a></li>
                 <li class="mr-10"><a href="rooms.html" class="text-dark">ROOMS</a></li>
                 <li class="mr-10"><a href="" class="text-dark">CONTACT</a></li>
             </ul>
-            <select name="lan" id="">
-                <option value="en">EN</option>
-                <option value="ch">CH</option>
-            </select>
+            
         </div>
 
     </header>
-    <div class="py-5 bg-secondary">
-        <form class="d-flex container">
-                <div class="form-group mr-3">
-                    <input type="date" name="inId" class="form-control bg-light border-0 modal-input-control">
-                </div>
-                <div class="form-group mr-3">
-                    <input type="date" name="outId" class="form-control bg-light border-0 modal-input-control">
-                </div>
-                
-                <div class="form-group mr-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend bg-dark text-light">
-                                <span class="input-group-text ">-</span>
-                            </div>
-                            <input type="number" class="form-control text-center modal-form-control"
-                                aria-label="Amount (to the nearest dollar)">
-                            <div class="input-group-append bg-dark text-light">
-                                <span class="input-group-text">+</span>
-                            </div>
-                        </div>
-                    </div>
-                <div class="form-group mr-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend bg-dark text-light">
-                                <span class="input-group-text">-</span>
-                            </div>
-                            <input type="number" class="form-control text-center modal-form-control"
-                                aria-label="Amount (to the nearest dollar)">
-                            <div class="input-group-append bg-dark text-light">
-                                <span class="input-group-text">+</span>
-                            </div>
-                        </div>
-                    </div>
-                <button class="bg-dark text-light modal-bookroom-submit border ml-auto">Book Now</button>       
-        </form>
-    </div>
-    <main class="container bookingMain mt-6">
-        <h2 class="h2">Almost Done</h2>
-        <p class="mt-4 line-height-2">您將預訂的房型為<span>Single Room</span><br>請填寫以下資料，即可完成訂房。</p>
-        <form class="container-0 mt-6" id="formBooking">
+    <main class="container bookingMain py-10">
+        <h2 class="h2 bold ">Almost Done</h2>
+        <p class="mt-4 line-height-3 mt-5">您將預訂的房型為<span id="bookRoomNameDOM" class="h2 ml-2 text-decoration">Single Room</span><br>請填寫以下資料，即可完成訂房。</p>
+        <form class="container-0 mt-6 formBooking" id="formBooking">
             <div class="row-0">
                 <div class="col-0-6 container-30 px-0">
                     <div class="row-30">
                         <div class="col-30-6">
                             <div class="form-group">
-                                <label for="bookName" class="small">真實姓名</label>
-                                <input type="text" name="bookName" class="form-control border-gray border-1 bookInputH" id="bookName">
+                                <label for="bookName" class="small mb-1 d-block">真實姓名</label>
+                                <input type="text" name="bookName" class="form-control border-1 border-primary bookInputH" id="bookNameDOM" placeholder="ex.王小明">
                             </div>
                             <div class="form-group mt-5">
-                                <label for="bookPhone" class="small">手機號碼</label>
-                                <input type="text" name="bookPhone" class="form-control border-gray border-1 bookInputH" id="bookPhone">
+                                <label for="bookPhone" class="small mb-1 d-block">手機號碼</label>
+                                <input type="text" name="bookPhone" class="form-control border-1 border-primary bookInputH" id="bookPhoneDOM" placeholder="ex.0912-xxx-xxx">
                             </div>
 
                         </div>
                         <div class="col-30-6">
                             <div class="form-group">
-                                <label for="bookStartDate" class="small">Check In</label>
-                                <input type="date" name="bookStartDate" class="form-control bg-light border-gray border-1 bookInputH" id="bookStartDate">
+                                <label for="bookStartDate" class="small mb-1 d-block">Check In</label>
+                                <input type="date" name="bookStartDate" class="form-control bg-light border-1 border-primary bookInputH inDate" id="bookStartDateDOM">
                             </div>
                             <div class="form-group mt-5">
-                                <label for="bookEndDate" class="small">Check In</label>
-                                <input type="date" name="bookEndDate" class="form-control bg-light border-gray border-1 bookInputH" id="bookEndDate">
+                                <label for="bookEndDate" class="small mb-1 d-block">Check In</label>
+                                <input type="date" name="bookEndDate" class="form-control bg-light border-1 border-primary bookInputH outDate" id="bookEndDateDOM">
                             </div>
 
                         </div>
                     </div>
                 </div>
                 <div class="col-0-6 d-flex flex-column align-items-end justify-content-end">
-                    <p class="display-2 mr-2 d-flex align-items-center"><span class="small">平日每晚</span>$1,200</li>
-                    <div class="mt-2">
-                        <a href="" class="btn rooms-btn-more bg-light text-dark mr-2">Back</a>
-                        <a href="" class="btn text-light bg-dark rooms-btn-book ">BOOK NOW</a>
+                    <p class="display-2 d-flex align-items-end bold"><span class="small mr-2" id="bookWhatDayDOM">平日每晚</span><span id="bookPriceDOM">$1,200</span></p>
+                    <div class="mt-4">
+                        <a href="" class="btn bg-light text-dark mr-2 h4" id="btn-back">BACK &lt</a>
+                        <a href="" class="btn text-light bg-dark h4" id="btn-bookCheck">OK !</a>
                     </div>
 
                 </div>
@@ -115,11 +76,13 @@
     <footer class="footer bg-primary  mt-14 py-10">
         <div class="container d-flex">
             <div class="mr-24">
-                <img src="img/logo@2x.png" alt="" class="lofthomeLogo">
-                <ul class="d-flex mt-6">
-                    <li class="mr-3"><a href=""><img src="img/fbLink_home@2x.png" alt="" class="linkImg"></a></li>
-                    <li class="mr-3"><a href=""><img src="img/igLink_home@2x.png" alt="" class="linkImg"></a></li>
-                    <li><a href=""><img src="img/mouLink_home@2x.png" alt="" class="linkImg"></a></li>
+                <img src="img/logo@2x.png" alt="" class="footerLogo">
+                <ul class="d-flex align-items-center mt-6">
+                    <li class="mr-3"><a href=""><img src="img/fbLink_home@2x.png" alt="facebookLink"
+                                class="linkImg"></a></li>
+                    <li class="mr-3"><a href=""><img src="img/igLink_home@2x.png" alt="instagramLink"
+                                class="linkImg"></a></li>
+                    <li><a href=""><img src="img/mouLink_home@2x.png" alt="" class="linkowl"></a></li>
                 </ul>
             </div>
             <div>
@@ -129,11 +92,11 @@
                     <li>Tel: +886 2 2777-77772</li>
                 </ul>
             </div>
-            <p class="ml-auto align-self-end text-secondary">Copyright © 2019 LOFT HOME</p>
-            
+            <p class="ml-auto align-self-end text-secondary">Copyright © 2021 LOFT HOME</p>
         </div>
 
     </footer>
+
 
 
 

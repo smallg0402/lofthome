@@ -117,7 +117,7 @@ body{
 
 //form
 
-.form-group{
+.serchroom .form-group{
     width: 100%;
     label{
         font-size: 0.875rem;
@@ -242,6 +242,9 @@ body{
 .mr-2{
     margin-right: 10px;
 }
+.ml-2{
+    margin-left: 10px;
+}
 
 .mr-3{
     margin-right: 15px;
@@ -306,6 +309,9 @@ body{
 .mb-10{
     margin-bottom: 50px;
 }
+
+//vertical-align
+
 
 //helper
 //object-fit
@@ -375,6 +381,9 @@ body{
 .text-none{
     text-decoration: none;
 }
+.text-decoration{
+    text-decoration: underline;
+}
 .display-1{
     font-size: 2.25rem;
 }
@@ -389,6 +398,9 @@ body{
 }
 .h3{
     font-size: 1.375rem; //22px
+}
+.h4{
+    font-size: 18px;
 }
 .bold{
     font-weight: bold;
@@ -583,12 +595,12 @@ body{
 
 .gallery-thumbs {
     .swiper-slide {
-        width: 33%;
+        width: 120px;
         height: 100%;
         opacity: 0.4;
         img{
             display: block;
-            width: 100%;
+            width: auto;
             height: 100%;
             object-fit: cover;
         }
@@ -647,15 +659,21 @@ body{
     border-radius: 50%;
 }
 .border-0{
-    border-width: 0;
+    border: 0 solid;
 }
 .border-1{
-    border-width: 1;
+    border: 1px solid;
 
+}
+.border-bottom-1{
+    border-bottom: 1px solid;
 }
 
 .border-gray{
     border-color: gray;
+}
+.border-primary{
+    border-color: #D1C8C3;
 }
 //個人化設定
 //針對首頁Swiper
@@ -719,13 +737,14 @@ body{
 
 .modal{
     display: none;
-    width: 100%;
-    height: 100%;
     position: fixed;
     left:0;
     top:0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
     background-color: rgba(0,0,0,0.4);
-    z-index: 5;
+    z-index: 1;
     overflow: hidden;
     // Prevent Chrome on Windows from adding a focus outline. For details, see
     // https://github.com/twbs/bootstrap/pull/10951.
@@ -739,6 +758,7 @@ body{
         height: 90%;
         overflow-x: hidden;
         background-color: white;
+        z-index: 2;
     }
     
 }
@@ -764,7 +784,7 @@ body{
     padding: 0rem;
 }
 //人數控制欄樣式設定
-.bookAdultsGroup,.bookKidsGroup{
+.serchRoom .bookAdultsGroup,.bookKidsGroup{
     flex-basis: 178px;
     height: 36px;
     padding: 0rem;
@@ -789,21 +809,22 @@ body{
     margin-right: auto;
 }
 .modal-close{
-    right: 5%;
-    top: 5%;
+    right: 20px;
+    top: 20px;
+    color: white;
     
 }
 
 //modal相關設定結束
 
-.rooms-btn-more{
+.btn-more{
     width: 132px;
     &:hover{
         background-color: black;
         color: white;
     }
 }
-.rooms-btn-book{
+.btn-bookNow{
     width: 132px;
     &:hover{
         background-color: white;
@@ -875,17 +896,34 @@ body{
 .roomsBar{
     color:red;
     form{
-        .form-group:nth-child(1),.form-group:nth-child(2){
+        .inDateGroup,.outdateGroup{
             width: 244px;
         }
-        .form-group:nth-child(3),.form-group:nth-child(4){
+        
+        .bookAdultsGroup,.bookKidsGroup{
             width: 178px;
+            .input-group-prepend,.input-group-append{
+                width: 36px;
+            }
+            .form-control{
+                width: 102px;
+            }
+        }
+        .bookAdults:after{
+            content: 'Adults';
+
+            
+        }
+        .bookKids:after{
+            content: 'Kids';
+
+            
         }
         .bookroom-submit{
             width: 132px;
         }
-
     }
+    
 }
 
 
@@ -893,6 +931,228 @@ body{
 .datepickSize{
     height: 36px;
 }
+
+.formBooking {
+    input{
+        width: 244px;
+        padding: 20px 14px;
+    }
+    .btn{
+        width: 132px;
+    }
+}
+
+//讀取樣式套件
+/*!
+ * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
+ * Copyright 2015 Daniel Cardoso <@DanielCardoso>
+ * Licensed under MIT
+ */
+ .la-ball-spin-clockwise,
+ .la-ball-spin-clockwise > div {
+     position: relative;
+     -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+             box-sizing: border-box;
+ }
+ .la-ball-spin-clockwise {
+     display: block;
+     font-size: 0;
+     color: #fff;
+ }
+ .la-ball-spin-clockwise.la-dark {
+     color: #333;
+ }
+ .la-ball-spin-clockwise > div {
+     display: inline-block;
+     float: none;
+     background-color: currentColor;
+     border: 0 solid currentColor;
+ }
+ .la-ball-spin-clockwise {
+     width: 32px;
+     height: 32px;
+ }
+ .la-ball-spin-clockwise > div {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     width: 8px;
+     height: 8px;
+     margin-top: -4px;
+     margin-left: -4px;
+     border-radius: 100%;
+     -webkit-animation: ball-spin-clockwise 1s infinite ease-in-out;
+        -moz-animation: ball-spin-clockwise 1s infinite ease-in-out;
+          -o-animation: ball-spin-clockwise 1s infinite ease-in-out;
+             animation: ball-spin-clockwise 1s infinite ease-in-out;
+ }
+ .la-ball-spin-clockwise > div:nth-child(1) {
+     top: 5%;
+     left: 50%;
+     -webkit-animation-delay: -.875s;
+        -moz-animation-delay: -.875s;
+          -o-animation-delay: -.875s;
+             animation-delay: -.875s;
+ }
+ .la-ball-spin-clockwise > div:nth-child(2) {
+     top: 18.1801948466%;
+     left: 81.8198051534%;
+     -webkit-animation-delay: -.75s;
+        -moz-animation-delay: -.75s;
+          -o-animation-delay: -.75s;
+             animation-delay: -.75s;
+ }
+ .la-ball-spin-clockwise > div:nth-child(3) {
+     top: 50%;
+     left: 95%;
+     -webkit-animation-delay: -.625s;
+        -moz-animation-delay: -.625s;
+          -o-animation-delay: -.625s;
+             animation-delay: -.625s;
+ }
+ .la-ball-spin-clockwise > div:nth-child(4) {
+     top: 81.8198051534%;
+     left: 81.8198051534%;
+     -webkit-animation-delay: -.5s;
+        -moz-animation-delay: -.5s;
+          -o-animation-delay: -.5s;
+             animation-delay: -.5s;
+ }
+ .la-ball-spin-clockwise > div:nth-child(5) {
+     top: 94.9999999966%;
+     left: 50.0000000005%;
+     -webkit-animation-delay: -.375s;
+        -moz-animation-delay: -.375s;
+          -o-animation-delay: -.375s;
+             animation-delay: -.375s;
+ }
+ .la-ball-spin-clockwise > div:nth-child(6) {
+     top: 81.8198046966%;
+     left: 18.1801949248%;
+     -webkit-animation-delay: -.25s;
+        -moz-animation-delay: -.25s;
+          -o-animation-delay: -.25s;
+             animation-delay: -.25s;
+ }
+ .la-ball-spin-clockwise > div:nth-child(7) {
+     top: 49.9999750815%;
+     left: 5.0000051215%;
+     -webkit-animation-delay: -.125s;
+        -moz-animation-delay: -.125s;
+          -o-animation-delay: -.125s;
+             animation-delay: -.125s;
+ }
+ .la-ball-spin-clockwise > div:nth-child(8) {
+     top: 18.179464974%;
+     left: 18.1803700518%;
+     -webkit-animation-delay: 0s;
+        -moz-animation-delay: 0s;
+          -o-animation-delay: 0s;
+             animation-delay: 0s;
+ }
+ .la-ball-spin-clockwise.la-sm {
+     width: 16px;
+     height: 16px;
+ }
+ .la-ball-spin-clockwise.la-sm > div {
+     width: 4px;
+     height: 4px;
+     margin-top: -2px;
+     margin-left: -2px;
+ }
+ .la-ball-spin-clockwise.la-2x {
+     width: 64px;
+     height: 64px;
+ }
+ .la-ball-spin-clockwise.la-2x > div {
+     width: 16px;
+     height: 16px;
+     margin-top: -8px;
+     margin-left: -8px;
+ }
+ .la-ball-spin-clockwise.la-3x {
+     width: 96px;
+     height: 96px;
+ }
+ .la-ball-spin-clockwise.la-3x > div {
+     width: 24px;
+     height: 24px;
+     margin-top: -12px;
+     margin-left: -12px;
+ }
+ /*
+  * Animation
+  */
+ @-webkit-keyframes ball-spin-clockwise {
+     0%,
+     100% {
+         opacity: 1;
+         -webkit-transform: scale(1);
+                 transform: scale(1);
+     }
+     20% {
+         opacity: 1;
+     }
+     80% {
+         opacity: 0;
+         -webkit-transform: scale(0);
+                 transform: scale(0);
+     }
+ }
+ @-moz-keyframes ball-spin-clockwise {
+     0%,
+     100% {
+         opacity: 1;
+         -moz-transform: scale(1);
+              transform: scale(1);
+     }
+     20% {
+         opacity: 1;
+     }
+     80% {
+         opacity: 0;
+         -moz-transform: scale(0);
+              transform: scale(0);
+     }
+ }
+ @-o-keyframes ball-spin-clockwise {
+     0%,
+     100% {
+         opacity: 1;
+         -o-transform: scale(1);
+            transform: scale(1);
+     }
+     20% {
+         opacity: 1;
+     }
+     80% {
+         opacity: 0;
+         -o-transform: scale(0);
+            transform: scale(0);
+     }
+ }
+ @keyframes ball-spin-clockwise {
+     0%,
+     100% {
+         opacity: 1;
+         -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+              -o-transform: scale(1);
+                 transform: scale(1);
+     }
+     20% {
+         opacity: 1;
+     }
+     80% {
+         opacity: 0;
+         -webkit-transform: scale(0);
+            -moz-transform: scale(0);
+              -o-transform: scale(0);
+                 transform: scale(0);
+     }
+ }
+
 
 
 

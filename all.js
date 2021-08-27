@@ -21,6 +21,7 @@ const modal_roomInfro = document.querySelector(".modal-roomInfro");
 
 //人數輸入欄節點
 const bookAdultsGroup = document.querySelectorAll(".bookAdultsgroup");
+console.log("adults"+bookAdultsGroup);
 const bookKidsGroup = document.querySelectorAll(".bookKidsGroup");
 const bookAdults = document.querySelectorAll(".bookAdults");
 const bookKids = document.querySelectorAll(".bookKids");
@@ -28,17 +29,18 @@ const bookKids = document.querySelectorAll(".bookKids");
 //首頁節點
 let index_room_list;
 //rooms頁節點
-let rooms_room_list;
+let rooms_roomList;
 
 //booking 頁節點
 // const formBooking = document.querySelector("#formBooking");
-const bookName = document.querySelector("#bookName");
-const bookPhone = document.querySelector("#bookPhone");
-const bookStartDate = document.querySelector("#bookStartDate");
-const bookEndDate = document.querySelector("#bookEndDate");
+let bookRoomNameDOM;
+let bookNameDOM;
+let bookPhoneDOM;
+let bookStartDateDOM;
+let bookEndDateDOM;
 
 //頁面路徑
-let path = window.location.pathname ;
+let path = window.location.pathname;
 //
 let roomsDetailArray = [];
 
@@ -48,96 +50,6 @@ let bookKidsNum = 0;
 
 //bookingId ;
 let bookingId;
-
-//切換不同網頁時抓取節點及取的遠端資料函式物件
-let getdata = {
-  pathDomEvent : function(){
-  if (path.indexOf("/index.html") != -1) {
-    index_room_list = document.querySelector(".index-room-list");
-    //首頁節點增加監聽器
-    index_room_list.addEventListener("click", function (e) {
-      e.preventDefault();
-      console.log(e.target.getAttribute("class"));
-      if (e.target.getAttribute("class").indexOf("roomCard") != -1) {
-        body.setAttribute("class", "open-modal");
-        let no = e.target.getAttribute("data-roomno");
-        modalRender(roomsDetailArray[no]);
-      }
-    });
-  } else if (path.indexOf("/rooms.html") != -1) {
-    //rooms節點
-    console.log(this);
-    rooms_roomList = document.querySelector(".rooms_roomList");
-    rooms_roomList.addEventListener("click", function (e) {
-      e.preventDefault();
-      console.log(e.target.getAttribute("class"));
-      if (e.target.getAttribute("class").indexOf("rooms-btn-more") != -1) {
-        body.setAttribute("class", "open-modal");
-        let no = e.target.getAttribute("data-roomno");
-        console.log(`roomno${no}`);
-        modalRender(roomsDetailArray[no]);
-      }
-    });
-  }
-  },
-  getData: function(){
-    axios
-    .get(`${url}rooms`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-      },
-    })
-    .then((response) => {
-      let roomsdata = response.data.items;
-      let idArray = [];
-      roomsdata.forEach(function (item) {
-        idArray.push(item.id);
-        console.log(idArray);
-      });
-      getRoomsDetail(idArray[0])
-        .then((response) => {
-          return getRoomsDetail(idArray[1]);
-        })
-        .then((response) => {
-          return getRoomsDetail(idArray[2]);
-        })
-        .then((response) => {
-          return getRoomsDetail(idArray[3]);
-        })
-        .then((response) => {
-          return getRoomsDetail(idArray[4]);
-        })
-        .then((response) => {
-          return getRoomsDetail(idArray[5]);
-        })
-        .then((response) => {
-          console.log(roomsDetailArray);
-          //待所有房間的詳細資料皆載入後判斷為哪一個頁面再進行渲染
-          if (path.indexOf("/index.html") != -1) {
-            indexPageRender(roomsdata);
-          } else if (path.indexOf("/rooms.html") != -1) {
-            
-          }
-          roomsPageRender(roomsDetailArray);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-        
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  },
-  
-}
-//執行初始讀取資料
-getdata.getpath();
-getdata.getRoomData();
-getdata.which();
-
-//-------------訂房時間相關設定------------------
 
 //獲取表單日期選擇節點
 let inDateDOM = document.querySelectorAll(".inDate");
@@ -166,6 +78,155 @@ inDateDOM.forEach((item) => {
 outDayNeed(today);
 maxDay(today);
 minDay(today);
+
+//切換不同網頁時抓取節點及取的遠端資料函式物件
+let getdata = {
+  pathDomEvent: function () {
+    if (path.indexOf("/index.html") != -1) {
+      index_room_list = document.querySelector(".index-room-list");
+      //首頁節點增加監聽器
+      index_room_list.addEventListener("click", function (e) {
+        e.preventDefault();
+        console.log(e.target.getAttribute("class"));
+        if (e.target.getAttribute("class").indexOf("roomCard") != -1) {
+          body.setAttribute("class", "open-modal");
+          let no = e.target.getAttribute("data-roomno");
+          modalRender(roomsDetailArray[no]);
+        }
+      });
+    } else if (path.indexOf("/rooms.html") != -1) {
+      //rooms節點
+      console.log(this);
+      rooms_roomList = document.querySelector(".rooms_roomList");
+      //roomList點擊事件
+      rooms_roomList.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (e.target.getAttribute("class").indexOf("btn-more") != -1) {
+          body.setAttribute("class", "open-modal");
+          let no = e.target.getAttribute("data-roomno");
+          console.log(`roomno${no}`);
+          modalRender(roomsDetailArray[no]);
+          console.log("roomsDetailtest" + roomsDetailArray[0]);
+        } else if (
+          e.target.getAttribute("class").indexOf("btn-bookNow") != -1
+        ) {
+          let no = e.target.getAttribute("data-roomno");
+          window.localStorage.setItem(
+            "bookRoomNameValue",
+            roomsDetailArray[no].name
+          );
+          window.localStorage.setItem("bookRoomId", roomsDetailArray[no].id);
+          let weekDay = new Date(Date.parse(inDateDOM[0].value)).getDay();
+          console.log("星期" + weekDay);
+          //如果不是星期六日(用getDay()取得0或6)則為平日價
+          //getDay()取得的星期一至星期日：數字為,1,2,3,4,5,6,0;
+          if ((weekDay == 5) | (weekDay == 6)) {
+            window.localStorage.setItem("bookWhatDayValue", "假日每晚");
+            window.localStorage.setItem(
+              "bookPriceValue",
+              roomsDetailArray[no].holidayPrice.toLocaleString()
+            );
+          } else {
+            window.localStorage.setItem("bookWhatDayValue", "平日每晚");
+            window.localStorage.setItem(
+              "bookPriceValue",
+              roomsDetailArray[no].normalDayPrice.toLocaleString()
+            );
+          }
+          window.localStorage.setItem("bookStartValue", inDateDOM[0].value);
+          window.localStorage.setItem("bookEndDateValue", outDateDOM[0].value);
+          window.location.href = "booking.html";
+        }
+      });
+    } else if (path.indexOf("/booking") != -1) {
+      //booking頁節點
+      let formBooking = document.querySelector("#formBooking");
+      bookRoomNameDOM = document.querySelector("#bookRoomNameDOM");
+      bookNameDOM = document.querySelector("#bookNameDOM");
+      bookPhoneDOM = document.querySelector("#bookPhoneDOM");
+      bookStartDateDOM = document.querySelector("#bookStartDateDOM");
+      bookEndDateDOM = document.querySelector("#bookEndDateDOM");
+      bookPriceDOM = document.querySelector("#bookPriceDOM");
+      bookWhatDayDOM = document.querySelector("#bookWhatDayDOM");
+
+      //由本地端儲存rooms或首頁紀錄的訂房資訊
+
+      bookRoomNameDOM.textContent = window.localStorage.getItem(
+        "bookRoomNameValue"
+      );
+      bookStartDateDOM.value = window.localStorage.getItem("bookStartValue");
+      bookEndDateDOM.value = window.localStorage.getItem("bookEndDateValue");
+      bookPriceDOM.textContent = window.localStorage.getItem("bookPriceValue");
+      bookWhatDayDOM.textContent = window.localStorage.getItem(
+        "bookWhatDayValue"
+      );
+      //booking設定按鈕監聽
+      formBooking.addEventListener("click", function (e) {
+        e.preventDefault();
+        let btnValue = e.target.getAttribute("id");
+        console.log(btnValue);
+        if (btnValue == "btn-back") {
+          window.location.href = "rooms.html";
+        } else if (btnValue == "btn-bookCheck") {
+          booking(window.localStorage.getItem("bookRoomId"));
+        }
+      });
+    }
+  },
+  getData: function () {
+    axios
+      .get(`${url}rooms`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      })
+      .then((response) => {
+        let roomsdata = response.data.items;
+        let idArray = [];
+        roomsdata.forEach(function (item) {
+          idArray.push(item.id);
+          console.log(idArray);
+        });
+        getRoomsDetail(idArray[0])
+          .then((response) => {
+            return getRoomsDetail(idArray[1]);
+          })
+          .then((response) => {
+            return getRoomsDetail(idArray[2]);
+          })
+          .then((response) => {
+            return getRoomsDetail(idArray[3]);
+          })
+          .then((response) => {
+            return getRoomsDetail(idArray[4]);
+          })
+          .then((response) => {
+            return getRoomsDetail(idArray[5]);
+          })
+          .then((response) => {
+            console.log("final" + roomsDetailArray);
+            //待所有房間的詳細資料皆載入後判斷為哪一個頁面再進行渲染
+            if (path.indexOf("/index.html") != -1) {
+              indexPageRender(roomsdata);
+            } else if (path.indexOf("/rooms.html") != -1) {
+              roomsPageRender(roomsDetailArray);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+};
+//執行初始讀取資料
+getdata.pathDomEvent();
+getdata.getData();
+
+//-------------時間相關設定------------------
 
 function minDay(startdate) {
   let minoutDate = new Date(Date.parse(startdate) + 86400000);
@@ -207,7 +268,7 @@ inDateDOM.forEach((item, i) => {
       outDayNeed(item.value);
     }
     //更改所有outDate節點最大值
-    maxDate(item.value);
+    maxDay(item.value);
     //更改所有outDate節點最小值
     minDay(item.value);
   });
@@ -267,6 +328,7 @@ bookKids.forEach((item) => {
 //設定成人人數選擇器監聽
 bookAdultsGroup.forEach((item) => {
   item.addEventListener("click", function (e) {
+    console.log("click");
     if (
       e.target.getAttribute("class").indexOf("input-group-text-prepend") != -1
     ) {
@@ -299,6 +361,7 @@ bookAdults.forEach((item) => {
 //設定兒童人數選擇器監聽
 bookKidsGroup.forEach((item) => {
   item.addEventListener("click", function (e) {
+    console.log("click");
     if (
       e.target.getAttribute("class").indexOf("input-group-text-prepend") != -1
     ) {
@@ -311,6 +374,7 @@ bookKidsGroup.forEach((item) => {
     if (bookKidsNum < 0) {
       bookKidsNum = 0;
     }
+    console.log(bookKidsNum);
 
     bookKids.forEach((kids) => {
       kids.value = bookKidsNum;
@@ -327,31 +391,22 @@ bookKids.forEach((item) => {
 
 //booking頁監聽
 
-// formBooking.addEventListener('click',function(e){
-//   e.preventDefault();
-//   let btnValue = e.target.value;
-//   if(btnValue == 'BOOK NOW'){
-
-//   }else if(btnValue == 'Back'){
-
-//   }else{
-//     return;
-//   }
-// })
-
 //booking 函式
-function booking() {
-  let nameValue = bookName.value;
-  let phoneValue = bookPhone.value;
-  let bookStartValue = bookStartDate.value;
-  let bookEndValue = bookEndDate.value;
+function booking(id) {
   axios
     .post(
-      `${url}room/3Elqe8kfMxdZv5xFLV4OUeN6jhmxIvQSTyj4eTgIowfIRvF4rerA2Nuegzc2Rgwu`,
+      `${url}room/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
+        },
+      },
+      {
+        params: {
+          name: bookNameDOM.value,
+          tel: bookPhoneDOM.value,
+          date: ["2021-08-28", "2021-08-29"],
         },
       }
     )
@@ -362,7 +417,6 @@ function booking() {
       console.log(error);
     });
 }
-
 
 //利用各房間id接收所有房間的詳細資料非同步函式
 // function reciveAllDetail(roomsdata){
@@ -377,7 +431,8 @@ function booking() {
 function getRoomsDetail(id) {
   return new Promise((resolve, reject) => {
     //接收單一房間詳細資料的變數
-    let roomdetail = [];
+    let roomdetail = {};
+    console.log("id" + id);
     //利用房間id網址傳送請求
     axios
       .get(`${url}room/${id}`, {
@@ -387,10 +442,11 @@ function getRoomsDetail(id) {
         },
       })
       .then(function (response) {
-        console.log(response);
-        roomdetail = response.data.room;
+        roomdetail = response.data.room[0];
         //此陣列只有一筆物件資料,因此要取第0筆資料為房間詳細資料,並推入房間詳細資料陣列
-        roomsDetailArray.push(roomdetail[0]);
+
+        roomsDetailArray.push(roomdetail);
+        console.log("roomdetail,here" + roomdetail);
         resolve();
       })
       .catch(function (error) {
@@ -414,7 +470,7 @@ function indexPageRender(roomsdata) {
   }
   //將列渲染至畫面上
   console.log(this);
-  this.this.getdata.index_room_list.innerHTML = row_str;
+  index_room_list.innerHTML = row_str;
   //取得所有的row節點
   let indexRoomList_row = document.querySelectorAll(".indexRoomList-row");
   console.log(`新增row${indexRoomList_row[0]}`);
@@ -446,6 +502,7 @@ function indexPageRender(roomsdata) {
 }
 //modal資料渲染
 function modalRender(roomDetail) {
+  console.log(roomDetail);
   let slideStr = "";
   let priceStr = `
   <li class="display-2 mr-2 d-flex align-items-center"><span class="small">平日每晚</span>$${roomDetail.normalDayPrice}</li>
@@ -471,7 +528,7 @@ function modalRender(roomDetail) {
   roomDetail.imageUrl.forEach(function (imgurl) {
     slideStr += ` 
     <div class="swiper-slide text-center">
-    <img src=${imgurl} alt="" class="h-100 ">
+    <img src=${imgurl} alt="" class="h-100">
     </div>`;
   });
   modal_roomTops.innerHTML = slideStr;
@@ -561,10 +618,12 @@ function roomsPageRender(data) {
                       <li class="display-2 mr-2 mt-4 d-flex align-items-center"><span class="small">假日每晚</span>$${item.holidayPrice.toLocaleString()}</li>
                   </ul>
                   <div class="align-self-end">
-                      <a href="" class="btn rooms-btn-more bg-light text-dark mr-2" data-roomno=${roomNo} data-roomnd=${
+                      <a href="" class="btn btn-more bg-light text-dark mr-2" data-roomno=${roomNo} data-roomnd=${
       item.id
     }>MORE +</a>
-                      <a href="" class="btn text-light bg-dark rooms-btn-book ">BOOK NOW</a>
+                      <a href="booking.html" class="btn text-light bg-dark btn-bookNow" data-roomno=${roomNo} data-roomnd=${
+      item.id
+    }>BOOK NOW</a>
                   </div>
 
             </div>
@@ -578,7 +637,7 @@ function roomsPageRender(data) {
   });
   //進行第一次頁面渲染
   console.log(this);
-  this.getdata.rooms_roomList.innerHTML = str;
+  rooms_roomList.innerHTML = str;
 
   //房間卡面中 房間設施圖案渲染
 
@@ -727,7 +786,7 @@ $(document).ready(function () {
 //Modal 開啟
 
 //首頁表單列表監聽
-
+//此用jQuery
 $(document).ready(function () {
   $(".modal-close").click(function (e) {
     e.preventDefault();

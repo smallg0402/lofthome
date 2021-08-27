@@ -931,17 +931,17 @@ body {
   transition: all 0.2;
 }
 
-.form-group {
+.serchroom .form-group {
   width: 100%;
 }
 
-.form-group label {
+.serchroom .form-group label {
   font-size: 0.875rem;
   display: block;
   margin-bottom: 10px;
 }
 
-.form-group .form-control {
+.serchroom .form-group .form-control {
   display: block;
   width: 100%;
 }
@@ -1077,6 +1077,10 @@ body {
 
 .mr-2 {
   margin-right: 10px;
+}
+
+.ml-2 {
+  margin-left: 10px;
 }
 
 .mr-3 {
@@ -1240,6 +1244,10 @@ body {
   text-decoration: none;
 }
 
+.text-decoration {
+  text-decoration: underline;
+}
+
 .display-1 {
   font-size: 2.25rem;
 }
@@ -1258,6 +1266,10 @@ body {
 
 .h3 {
   font-size: 1.375rem;
+}
+
+.h4 {
+  font-size: 18px;
 }
 
 .bold {
@@ -1452,14 +1464,14 @@ body {
 }
 
 .gallery-thumbs .swiper-slide {
-  width: 33%;
+  width: 120px;
   height: 100%;
   opacity: 0.4;
 }
 
 .gallery-thumbs .swiper-slide img {
   display: block;
-  width: 100%;
+  width: auto;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
@@ -1516,15 +1528,23 @@ body {
 }
 
 .border-0 {
-  border-width: 0;
+  border: 0 solid;
 }
 
 .border-1 {
-  border-width: 1;
+  border: 1px solid;
+}
+
+.border-bottom-1 {
+  border-bottom: 1px solid;
 }
 
 .border-gray {
   border-color: gray;
+}
+
+.border-primary {
+  border-color: #D1C8C3;
 }
 
 .home-swiper {
@@ -1578,13 +1598,14 @@ body {
 
 .modal {
   display: none;
-  width: 100%;
-  height: 100%;
   position: fixed;
   left: 0;
   top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 5;
+  z-index: 1;
   overflow: hidden;
   outline: 0;
 }
@@ -1594,6 +1615,7 @@ body {
   height: 90%;
   overflow-x: hidden;
   background-color: white;
+  z-index: 2;
 }
 
 .modal-dialog-container {
@@ -1609,14 +1631,14 @@ body {
   padding: 0rem;
 }
 
-.bookAdultsGroup, .bookKidsGroup {
+.serchRoom .bookAdultsGroup, .bookKidsGroup {
   -ms-flex-preferred-size: 178px;
       flex-basis: 178px;
   height: 36px;
   padding: 0rem;
 }
 
-.bookAdultsGroup .input-group, .bookKidsGroup .input-group {
+.serchRoom .bookAdultsGroup .input-group, .bookKidsGroup .input-group {
   height: 100%;
 }
 
@@ -1640,24 +1662,25 @@ body {
 }
 
 .modal-close {
-  right: 5%;
-  top: 5%;
+  right: 20px;
+  top: 20px;
+  color: white;
 }
 
-.rooms-btn-more {
+.btn-more {
   width: 132px;
 }
 
-.rooms-btn-more:hover {
+.btn-more:hover {
   background-color: black;
   color: white;
 }
 
-.rooms-btn-book {
+.btn-bookNow {
   width: 132px;
 }
 
-.rooms-btn-book:hover {
+.btn-bookNow:hover {
   background-color: white;
   color: black;
 }
@@ -1747,12 +1770,28 @@ body {
   color: red;
 }
 
-.roomsBar form .form-group:nth-child(1), .roomsBar form .form-group:nth-child(2) {
+.roomsBar form .inDateGroup, .roomsBar form .outdateGroup {
   width: 244px;
 }
 
-.roomsBar form .form-group:nth-child(3), .roomsBar form .form-group:nth-child(4) {
+.roomsBar form .bookAdultsGroup, .roomsBar form .bookKidsGroup {
   width: 178px;
+}
+
+.roomsBar form .bookAdultsGroup .input-group-prepend, .roomsBar form .bookAdultsGroup .input-group-append, .roomsBar form .bookKidsGroup .input-group-prepend, .roomsBar form .bookKidsGroup .input-group-append {
+  width: 36px;
+}
+
+.roomsBar form .bookAdultsGroup .form-control, .roomsBar form .bookKidsGroup .form-control {
+  width: 102px;
+}
+
+.roomsBar form .bookAdults:after {
+  content: 'Adults';
+}
+
+.roomsBar form .bookKids:after {
+  content: 'Kids';
 }
 
 .roomsBar form .bookroom-submit {
@@ -1761,5 +1800,199 @@ body {
 
 .datepickSize {
   height: 36px;
+}
+
+.formBooking input {
+  width: 244px;
+  padding: 20px 14px;
+}
+
+.formBooking .btn {
+  width: 132px;
+}
+
+/*
+ * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
+ * Copyright 2015 Daniel Cardoso <@DanielCardoso>
+ * Licensed under MIT
+ */
+.la-ball-spin-clockwise,
+.la-ball-spin-clockwise > div {
+  position: relative;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.la-ball-spin-clockwise {
+  display: block;
+  font-size: 0;
+  color: #fff;
+}
+
+.la-ball-spin-clockwise.la-dark {
+  color: #333;
+}
+
+.la-ball-spin-clockwise > div {
+  display: inline-block;
+  float: none;
+  background-color: currentColor;
+  border: 0 solid currentColor;
+}
+
+.la-ball-spin-clockwise {
+  width: 32px;
+  height: 32px;
+}
+
+.la-ball-spin-clockwise > div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  margin-left: -4px;
+  border-radius: 100%;
+  -webkit-animation: ball-spin-clockwise 1s infinite ease-in-out;
+  animation: ball-spin-clockwise 1s infinite ease-in-out;
+}
+
+.la-ball-spin-clockwise > div:nth-child(1) {
+  top: 5%;
+  left: 50%;
+  -webkit-animation-delay: -.875s;
+  animation-delay: -.875s;
+}
+
+.la-ball-spin-clockwise > div:nth-child(2) {
+  top: 18.1801948466%;
+  left: 81.8198051534%;
+  -webkit-animation-delay: -.75s;
+  animation-delay: -.75s;
+}
+
+.la-ball-spin-clockwise > div:nth-child(3) {
+  top: 50%;
+  left: 95%;
+  -webkit-animation-delay: -.625s;
+  animation-delay: -.625s;
+}
+
+.la-ball-spin-clockwise > div:nth-child(4) {
+  top: 81.8198051534%;
+  left: 81.8198051534%;
+  -webkit-animation-delay: -.5s;
+  animation-delay: -.5s;
+}
+
+.la-ball-spin-clockwise > div:nth-child(5) {
+  top: 94.9999999966%;
+  left: 50.0000000005%;
+  -webkit-animation-delay: -.375s;
+  animation-delay: -.375s;
+}
+
+.la-ball-spin-clockwise > div:nth-child(6) {
+  top: 81.8198046966%;
+  left: 18.1801949248%;
+  -webkit-animation-delay: -.25s;
+  animation-delay: -.25s;
+}
+
+.la-ball-spin-clockwise > div:nth-child(7) {
+  top: 49.9999750815%;
+  left: 5.0000051215%;
+  -webkit-animation-delay: -.125s;
+  animation-delay: -.125s;
+}
+
+.la-ball-spin-clockwise > div:nth-child(8) {
+  top: 18.179464974%;
+  left: 18.1803700518%;
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+
+.la-ball-spin-clockwise.la-sm {
+  width: 16px;
+  height: 16px;
+}
+
+.la-ball-spin-clockwise.la-sm > div {
+  width: 4px;
+  height: 4px;
+  margin-top: -2px;
+  margin-left: -2px;
+}
+
+.la-ball-spin-clockwise.la-2x {
+  width: 64px;
+  height: 64px;
+}
+
+.la-ball-spin-clockwise.la-2x > div {
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  margin-left: -8px;
+}
+
+.la-ball-spin-clockwise.la-3x {
+  width: 96px;
+  height: 96px;
+}
+
+.la-ball-spin-clockwise.la-3x > div {
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+}
+
+.la-ball-spin-clockwise{
+  position: absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  margin: auto;
+}
+
+/*
+  * Animation
+  */
+@-webkit-keyframes ball-spin-clockwise {
+  0%,
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+}
+
+@keyframes ball-spin-clockwise {
+  0%,
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
 }
 /*# sourceMappingURL=all.css.map */
