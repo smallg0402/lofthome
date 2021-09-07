@@ -13,18 +13,22 @@
     <link rel="stylesheet" href="sass/all.css">
 </head>
 <body>
-    <header class="header px-28 py-22 border-bottom-1 border-primary">
+    <header class="header px-28 py-22">
         <div class="navbar pr-12">
-            <h1 class="mr-auto imageReplace"><a href="index.html">LOFT HOME</a></h1>
-            <ul class="navbar-list h3">
+            <h1 class="imageReplace logo"><a href="index.html">LOFT HOME</a></h1>
+            <ul class="navbar-list h3 ml-auto">
                 <li class="mr-10"><a href="" class="text-dark">ABOUT US</a></li>
                 <li class="mr-10"><a href="rooms.html" class="text-dark">ROOMS</a></li>
-                <li class="mr-10"><a href="" class="text-dark">CONTACT</a></li>
+                <li class=""><a href="" class="text-dark">CONTACT</a></li>
             </ul>
-            
         </div>
 
     </header>
+    <nav class="navbar-phone d-none d-sm-flex">
+      <a class="" href="#">ABOUT US</a>
+      <a class="" href="rooms.html">ROOMS</a>
+      <a class="" href="#">CONTACT</a>
+    </nav>
     <main class="container bookingMain py-10">
         <h2 class="h2 bold ">Almost Done</h2>
         <p class="mt-4 line-height-3 mt-5">您將預訂的房型為<span id="bookRoomNameDOM" class="h2 ml-2 text-decoration">Single Room</span><br>請填寫以下資料，即可完成訂房。</p>
@@ -73,9 +77,9 @@
 
     </main>
 
-    <footer class="footer bg-primary  mt-14 py-10">
+    <footer class="footer bg-primary  mt-14 py-10 px-md-1">
         <div class="container d-flex">
-            <div class="mr-24">
+            <div class="mr-24 mr-sm-0">
                 <img src="img/logo@2x.png" alt="" class="footerLogo">
                 <ul class="d-flex align-items-center mt-6">
                     <li class="mr-3"><a href=""><img src="img/fbLink_home@2x.png" alt="facebookLink"
@@ -85,14 +89,14 @@
                     <li><a href=""><img src="img/mouLink_home@2x.png" alt="" class="linkowl"></a></li>
                 </ul>
             </div>
-            <div>
-                <ul>
+            <div class="mt-sm-5">
+                <ul class="text-sm-center">
                     <li class="mb-3">台北市中山區長春路777號3樓</li>
                     <li class="mb-3">Mail: lofthome@mail.com</li>
                     <li>Tel: +886 2 2777-77772</li>
                 </ul>
             </div>
-            <p class="ml-auto align-self-end text-secondary">Copyright © 2021 LOFT HOME</p>
+            <p class="copyRight text-secondary">Copyright © 2021 LOFT HOME</p>
         </div>
 
     </footer>

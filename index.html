@@ -20,15 +20,20 @@
 <body>
     <header class="header px-28 py-22">
         <div class="navbar pr-12">
-            <h1 class="mr-auto imageReplace"><a href="index.html">LOFT HOME</a></h1>
-            <ul class="navbar-list h3">
+            <h1 class="imageReplace logo"><a href="index.html">LOFT HOME</a></h1>
+            <ul class="navbar-list h3 ml-auto">
                 <li class="mr-10"><a href="" class="text-dark">ABOUT US</a></li>
                 <li class="mr-10"><a href="rooms.html" class="text-dark">ROOMS</a></li>
-                <li class="mr-10"><a href="" class="text-dark">CONTACT</a></li>
+                <li class=""><a href="" class="text-dark">CONTACT</a></li>
             </ul>
         </div>
 
     </header>
+    <nav class="navbar-phone d-none d-sm-flex">
+      <a class="" href="#">ABOUT US</a>
+      <a class="" href="rooms.html">ROOMS</a>
+      <a class="" href="#">CONTACT</a>
+    </nav>
     <section class="banner relative">
         <div class="swiper-container mw-100 home-swiper" id="homeSwiper">
             <!-- Additional required wrapper -->
@@ -52,47 +57,41 @@
 
         </div>
 
-        <form class="serchRoom absolute bg-light px-28 pt-30">
-            <div class="form-group">
+        <form class="serchRoom bg-light px-28 py-30">
+            <div class="form-group inDateGroup">
                 <label for="inDate" class="small">Check In</label>
                 <input type="date" name="inDate" id="inDate"
-                    class="inDate datepickSize startDate form-control bg-light border-0">
+                    class="inDate datepickSize startDate form-control bg-light border-0 w-100 mt-2">
             </div>
-            <div class="form-group mt-6">
+            <div class="form-group mt-6 outDateGroup">
                 <label for="outDate" class="small">Check Out</label>
                 <input type="date" name="outDate" id="outDate"
-                    class="outDate datepickSize endDate form-control bg-light border-0">
+                    class="outDate datepickSize endDate form-control bg-light border-0 w-100 mt-2">
             </div>
-            <div class="d-flex mt-6">
-                <div class="form-group mr-4">
+            <div class="d-flex mt-6 justify-content-sm-between">
+                <div class="form-group mr-4 bookAdultsGroup">
                     <label for="">Adults</label>
-                    <div class="input-group bookAdultsgroup">
-                        <div class="input-group-prepend  bg-dark text-light">
-                            <span class="input-group-text input-group-text-prepend ">-</span>
-                        </div>
+                    <div class="input-group">
+                        <button type="button" class="input-group-prepend  bg-dark text-light">-
+                        </button>
                         <input type="number" class="form-control text-center bookAdults"
                             aria-label="Amount (to the nearest dollar)">
-                        <div class="input-group-append  bg-dark text-light">
-                            <span class="input-group-text input-group-text-append">+</span>
-                        </div>
+                        <button type="button" class="input-group-append  bg-dark text-light">+
+                        </button>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group  bookKidsGroup">
                     <label for="">Kids</label>
-                    <div class="input-group bookKidsGroup">
-                        <div class="input-group-prepend  bg-dark text-light">
-                            <span class="input-group-text input-group-text-prepend">-</span>
-                        </div>
+                    <div class="input-group">
+                        <button type="button" class="input-group-prepend  bg-dark text-light">-</button>
                         <input type="number" class="form-control text-center delete-nb bookKids"
                             aria-label="Amount (to the nearest dollar)">
-                        <div class="input-group-append  bg-dark text-light">
-                            <span class="input-group-text input-group-text-append">+</span>
-                        </div>
+                        <button type="button" class="input-group-append  bg-dark text-light">+</button>
                     </div>
                 </div>
 
             </div>
-            <div class="text-center mt-8 mb-7">
+            <div class="text-center mt-8">
                 <button class="bg-transparent serchRoom-submit">SEARCH</button>
             </div>
 
@@ -100,9 +99,9 @@
             </div>
 
     </section>
-    <section class="index-room container container-5 mt-12">
-        <h2 class="h1">Room type</h2>
-        <div class="index-room-list mt-5 text-light relative">
+    <section class="index-room container mt-12 mt-md-5">
+        <h2 class="h1 text-sm-center">Room type</h2>
+        <div class="index-room-list mt-5 text-light relative container-5">
             <!-- 讀取圖示 -->
             <div class="la-ball-spin-clockwise la-dark la-2x ">
                 <div></div>
@@ -115,9 +114,9 @@
                 <div></div>
             </div>
     </section>
-    <footer class="footer bg-primary  mt-14 py-10">
+    <footer class="footer bg-primary  mt-14 py-10 px-md-1">
         <div class="container d-flex">
-            <div class="mr-24">
+            <div class="mr-24 mr-sm-0">
                 <img src="img/logo@2x.png" alt="" class="footerLogo">
                 <ul class="d-flex align-items-center mt-6">
                     <li class="mr-3"><a href=""><img src="img/fbLink_home@2x.png" alt="facebookLink"
@@ -127,169 +126,168 @@
                     <li><a href=""><img src="img/mouLink_home@2x.png" alt="" class="linkowl"></a></li>
                 </ul>
             </div>
-            <div>
-                <ul>
+            <div class="mt-sm-5">
+                <ul class="text-sm-center">
                     <li class="mb-3">台北市中山區長春路777號3樓</li>
                     <li class="mb-3">Mail: lofthome@mail.com</li>
                     <li>Tel: +886 2 2777-77772</li>
                 </ul>
             </div>
-            <p class="ml-auto align-self-end text-secondary">Copyright © 2021 LOFT HOME</p>
+            <p class="copyRight text-secondary">Copyright © 2021 LOFT HOME</p>
         </div>
 
     </footer>
 
     <div class="modal">
-        <div class="modal-dialog mr-auto ml-auto mt-5 relative">
-            <a href="" class="absolute modal-close z-index-10"><i class="fas fa-times z-index-10"></i></a>
-            <div class="modal-swiper">
-                <div class="modal-swiper-top relative">
-                  <!-- gallery swiper上層 -->
-                  <div class="swiper-container gallery-top z-index-1 modal-roomTops">
-                      <div class="swiper-wrapper">
-                        <div class="swiper-slide" >
-                            <img src="img/singleRoom_home.png" alt="">
-                        </div>
-                        <div class="swiper-slide" >
-                            <img src="img/singleRoom_home.png" alt="">
-                        </div>
-                        <div class="swiper-slide" >
-                            <img src="img/singleRoom_home.png" alt="">
-                        </div>
-                      </div>
+        <a href="" class="absolute modal-close z-index-10"
+            ><i class="fas fa-times"></i
+          ></a>
+        <div class="modal-dialog mt-5 relative">
+          <!-- 如何將x放在視窗右上方且不會被擋著？ 
+          暫時的做法：將a放在modal黑色用絕對定位-->
+          <div class="modal-swiper">
+            <div class="modal-swiper-top relative">
+              <!-- gallery swiper上層 -->
+              <div class="swiper-container gallery-top z-index-1 modal-roomTops">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <img src="img/singleRoom_home.png" alt="" />
                   </div>
-                  <div class=" w-100 h-100 modal-swiper-text pt-45 pb-35 absolute ">
-                     <div class="modal-dialog-container d-flex justify-content-between w-100 h-100">
-                      <h3 class="z-index-10 display-2 modal-roomName">Single Room</h3>
-                      <ul class="align-self-end z-index-10">
-                          <li class="display-2  d-flex align-items-center"><span class="small">平日每晚</span>$1,200</li>
-                          <li class="display-2  mt-4 d-flex align-items-center"><span class="small">假日每晚</span>$1,200</li>
-                      </ul>
-                    </div>
+                  <div class="swiper-slide">
+                    <img src="img/singleRoom_home.png" alt="" />
                   </div>
-              
-                 
-               </div>
-                  <div class="swiper-container gallery-thumbs bg-primary">
-                      <div class="swiper-wrapper">
-                        <div class="swiper-slide" >
-                            <img src="img/singleRoom_home.png" alt="">
-                        </div>
-                        <div class="swiper-slide" >
-                            <img src="img/singleRoom_home.png" alt="">
-                        </div>
-                        <div class="swiper-slide" >
-                            <img src="img/singleRoom_home.png" alt="">
-                        </div>
-                      </div>
+                  <div class="swiper-slide">
+                    <img src="img/singleRoom_home.png" alt="" />
                   </div>
-               </div>
-
-
-            <div class="d-flex modal-dialog-container mt-7">
-                <div class="mr-65">
-                    <h3 class="h2">房間設備</h3>
-                    <ul class="d-flex mt-6">
-                        <li class="text-center mr-1">
-                            <img src="img/icon_fridge.png" alt="" class="p">
-                            <p class="mt-3">冰箱</p>
-                        </li>
-                        <li class="text-center mr-1">
-                            <img src="img/icon_toilet.png" alt="">
-                            <p class="mt-3">獨立浴廁</p>
-                        </li>
-                        <li class="text-center mr-1">
-                            <img src="img/icon_wifi.png" alt="">
-                            <p class="mt-3">免費wifi</p>
-                        </li>
-                        <li class="text-center">
-                            <img src="img/icon_phone.png" alt="">
-                            <p class="mt-3">電話</p>
-                        </li>
-                    </ul>
                 </div>
-                <div>
-                    <h3 class="h2">其他</h3>
-                    <ul class="d-flex mt-6">
-                        <li class="text-center mr-1">
-                            <img src="img/icon_fork.png" alt="">
-                            <p class="mt-3">早餐</p>
-                        </li>
-                        <li class="text-center mr-1">
-                            <img src="img/icon_pet.png" alt="">
-                            <p class="mt-3">可帶寵物</p>
-                        </li>
-                        <li class="text-center">
-                            <img src="img/icon_no-smoking.png" alt="">
-                            <p class="mt-3">禁菸</p>
-                        </li>
-                    </ul>
+              </div>
+              <div class="w-100 h-100 modal-swiper-text pt-45 pb-35 absolute">
+                <div
+                  class="modal-dialog-container d-flex justify-content-between w-100 h-100"
+                >
+                  <h3 class="z-index-10 display-2 modal-roomName">Single Room</h3>
+                  <ul class="align-self-end z-index-10 modal-roomPrice">
+                    <li class="display-2 d-flex align-items-center">
+                      <span class="small">平日每晚</span class="">$1,200
+                    </li>
+                    <li class="display-2 mt-4 d-flex align-items-center">
+                      <span class="small">假日每晚</span>$1,200
+                    </li>
+                  </ul>
                 </div>
+              </div>
             </div>
-            <div class="mt-8 modal-dialog-container">
-                <h3 class="h2">簡介</h3>
-                <p class="mt-4 line-height-2 letter-spacing-1">Single Room is only reserved for one guest. There is a
-                    bedroom with a single size bed and a private
-                    bathroom. Everything you need prepared for you: sheets and blankets, towels, soap and shampoo,
-                    hairdryer are provided. In the room there is AC and of course WiFi.</p>
-            </div>
-            <div class="container-16 modal-dialog-container mt-375">
-                <ul class="row-16">
-                    <li class="col-16-2">
-                        <p class="add-before-line">人數：1</p>
-                        <p class="add-before-line mt-3">床型：單人床</p>
-                    </li>
-                    <li class="col-16-2">
-                        <p class="add-before-line">坪數：18平方公尺
-                        </p>
-                        <p class="add-before-line mt-3">餐點：附早餐</p>
-
-                    </li>
-                    <li class="col-16-4">
-                        <p class="add-before-line">checkIn 時間：最早15:00、最晚21:00</p>
-                        <p class="add-before-line mt-3">checkOut 時間：10:00</p>
-
-                    </li>
-                </ul>
-
-            </div>
-
-            <div class="mt-6 bg-third py-5 ">
-                <div class="d-flex modal-dialog-container">
-                    <!-- 在首頁的form會消失,why? -->
-                    <form action="" class="">
-                     <input type="date" name="inId" class="inDate form-control bg-light border-0 modal-input-control mr-3">
-                     <input type="date" name="outId" class="outDate form-control bg-light border-0 modal-input-control mr-3">
-                     <div class="bookAdultsGroup mr-3">
-                     <div class="input-group">
-                            <div class="input-group-prepend bg-dark text-light">
-                                <span class="input-group-text ">-</span>
-                            </div>
-                            <input type="number" class="form-control text-center modal-form-control bookAdults"
-                                aria-label="Amount (to the nearest dollar)">
-                            <div class="input-group-append bg-dark text-light">
-                                <span class="input-group-text">+</span>
-                            </div>
-                     </div>
-                    </div>
-                     <div class="bookKidsGroup">
-                     <div class="input-group">
-                            <div class="input-group-prepend bg-dark text-light">
-                                <span class="input-group-text input-group-text-prepend ">-</span>
-                            </div>
-                            <input type="number" class="form-control text-center modal-form-control bookKids"
-                                aria-label="Amount (to the nearest dollar)">
-                            <div class="input-group-append bg-dark text-light">
-                                <span class="input-group-text input-group-text-append">+</span>
-                            </div>
-                     </div>
-                    </div>
-                     <button class="bg-dark text-light modal-bookroom-submit border ml-auto">Book Now</button>
-                    </form>
+            <div class="swiper-container gallery-thumbs bg-primary modal-roomthumbs">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img src="img/singleRoom_home.png" alt="" />
                 </div>
+                <div class="swiper-slide">
+                  <img src="img/singleRoom_home.png" alt="" />
+                </div>
+                <div class="swiper-slide">
+                  <img src="img/singleRoom_home.png" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="d-flex modal-dialog-container mt-7 modal-roomAllEqu d-md-block">
+            <div class="modal-roomEqu">
+              <h3 class="h2">房間設備</h3>
+              <ul class="d-flex mt-6 modal-roomEqu-list">
+                <li class="text-center mr-1">
+                  <img src="img/icon_fridge.png" alt="" class="p" />
+                  <p class="mt-3">冰箱</p>
+                </li>
+                <li class="text-center mr-1">
+                  <img src="img/icon_toilet.png" alt="" />
+                  <p class="mt-3">獨立浴廁</p>
+                </li>
+                <li class="text-center mr-1">
+                  <img src="img/icon_wifi.png" alt="" />
+                  <p class="mt-3">免費wifi</p>
+                </li>
+                <li class="text-center">
+                  <img src="img/icon_phone.png" alt="" />
+                  <p class="mt-3">電話</p>
+                </li>
+              </ul>
+            </div>
+            <div class="modal-roomOther">
+              <h3 class="h2">其他</h3>
+              <ul class="d-flex mt-6 modal-roomOther-list">
+                <li class="text-center mr-1">
+                  <img src="img/icon_fork.png" alt="" />
+                  <p class="mt-3">早餐</p>
+                </li>
+                <li class="text-center mr-1">
+                  <img src="img/icon_pet.png" alt="" />
+                  <p class="mt-3">可帶寵物</p>
+                </li>
+                <li class="text-center">
+                  <img src="img/icon_no-smoking.png" alt="" />
+                  <p class="mt-3">禁菸</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-8 modal-dialog-container">
+            <h3 class="h2">簡介</h3>
+            <p class="mt-4 line-height-2 letter-spacing-1 modal-roomIntro">
+              Single Room is only reserved for one guest. There is a bedroom with
+              a single size bed and a private bathroom. Everything you need
+              prepared for you: sheets and blankets, towels, soap and shampoo,
+              hairdryer are provided. In the room there is AC and of course WiFi.
+            </p>
+          </div>
+          <div class="container-16 modal-dialog-container mt-375">
+            <ul class="row-16 modal-roomInfro">
+              <li class="col-16-2  v">
+                <p class="add-before-line">人數：1</p>
+                <p class="add-before-line mt-3">床型：單人床</p>
+              </li>
+              <li class="col-16-2 col-md-16-4">
+                <p class="add-before-line">坪數：18平方公尺</p>
+                <p class="add-before-line mt-3">餐點：附早餐</p>
+              </li>
+              <li class="col-16-4 col-md-16-8 mt-md-5">
+                <p class="add-before-line">checkIn 時間：最早15:00、最晚21:00</p>
+                <p class="add-before-line mt-3">checkOut 時間：10:00</p>
+              </li>
+            </ul>
+          </div>
+  
+          <div class="mt-6 bg-third py-5 ">
+            <div class="d-flex modal-dialog-container modal-book">
+                <form action="" class="d-flex w-100">
+                 <input type="date" name="inId" class="inDate form-control bg-light border-0 modal-input-control mr-3">
+                 <input type="date" name="outId" class="outDate form-control bg-light border-0 modal-input-control mr-3">
+                 <div class="bookAdultsGroup mr-3">
+                 <div class="input-group w-100 d-flex h-100">
+                        <button type="button" class="input-group-prepend bg-dark text-light">-
+                        </button>
+                        <input type="number" class="form-control modal-form-control bookAdults"
+                            aria-label="Amount (to the nearest dollar)">
+                        <button class="input-group-append bg-dark text-light" type="button">+
+                        </button>
+                 </div>
+                </div>
+                 <div class="bookKidsGroup">
+                 <div class="input-group w-100 d-flex h-100">
+                        <button class="input-group-prepend bg-dark text-light" type="button">-
+                        </button>
+                        <input type="number" class="form-control modal-form-control bookKids"
+                            aria-label="Amount (to the nearest dollar)">
+                        <button class="input-group-append bg-dark text-light" type="button">+
+                        </button>
+                 </div>
+                </div>
+                 <button class="bg-dark text-light modal-bookroom-submit border ml-auto modal-roomBook">Book Now</button>
+                </form>
             </div>
         </div>
-    </div>
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

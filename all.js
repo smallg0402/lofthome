@@ -9,10 +9,10 @@ const modal = document.querySelector(".modal");
 
 //modal視窗節點
 const modal_dialog = document.querySelector(".modal-dialog");
-const modal_roomTops = document.querySelector(".modal-roomTops");
+const modal_roomTops = document.querySelector(".modal-roomTops .swiper-wrapper");
 const modal_roomName = document.querySelector(".modal-roomName");
 const modal_roomPrice = document.querySelector(".modal-roomPrice");
-const modal_roomthumbs = document.querySelector(".modal-roomthumbs");
+const modal_roomthumbs = document.querySelector(".modal-roomthumbs .swiper-wrapper");
 const modal_roomIntro = document.querySelector(".modal-roomIntro");
 const modal_roomBook = document.querySelector(".modal-roomBook");
 const modal_roomOther = document.querySelector(".modal-roomOther");
@@ -20,16 +20,18 @@ const modal_roomEqi = document.querySelector(".modal-roomEqi");
 const modal_roomInfro = document.querySelector(".modal-roomInfro");
 
 //人數輸入欄節點
-const bookAdultsGroup = document.querySelectorAll(".bookAdultsgroup");
-console.log("adults"+bookAdultsGroup);
+const bookAdultsGroup = document.querySelectorAll(".bookAdultsGroup");
 const bookKidsGroup = document.querySelectorAll(".bookKidsGroup");
 const bookAdults = document.querySelectorAll(".bookAdults");
 const bookKids = document.querySelectorAll(".bookKids");
+const btn_bookNow = document.querySelector(".btn-bookNow");
 
 //首頁節點
 let index_room_list;
 //rooms頁節點
 let rooms_roomList;
+
+let loading_screen;
 
 //booking 頁節點
 // const formBooking = document.querySelector("#formBooking");
@@ -47,6 +49,8 @@ let roomsDetailArray = [];
 //book Num 起始
 let bookAdultsNum = 1;
 let bookKidsNum = 0;
+let serchNum = bookAdultsNum+bookKidsNum;
+console.log(serchNum);
 
 //bookingId ;
 let bookingId;
@@ -84,13 +88,17 @@ let getdata = {
   pathDomEvent: function () {
     if (path.indexOf("/index.html") != -1) {
       index_room_list = document.querySelector(".index-room-list");
+      loading_screen = document.querySelector(".loadingscreen");
       //首頁節點增加監聽器
       index_room_list.addEventListener("click", function (e) {
         e.preventDefault();
-        console.log(e.target.getAttribute("class"));
-        if (e.target.getAttribute("class").indexOf("roomCard") != -1) {
+        console.log(e.target);
+        if (e.target.getAttribute("class").indexOf("roomCard-float") != -1) {
           body.setAttribute("class", "open-modal");
+          console.log(e.target);
           let no = e.target.getAttribute("data-roomno");
+          console.log(no);
+          console.log(roomsDetailArray);
           modalRender(roomsDetailArray[no]);
         }
       });
@@ -98,6 +106,18 @@ let getdata = {
       //rooms節點
       console.log(this);
       rooms_roomList = document.querySelector(".rooms_roomList");
+      loading_screen = document.querySelector(".loading-screen");
+      let room_serch = document.querySelector(".bookroom-submit");
+      
+
+      //roomserchBar點擊事件
+      room_serch.addEventListener("click",function(e){
+        e.preventDefault();
+        serchNum = bookKidsNum+bookAdultsNum;
+        roomsPageRender(roomsDetailArray);
+        
+
+      })
       //roomList點擊事件
       rooms_roomList.addEventListener("click", function (e) {
         e.preventDefault();
@@ -273,6 +293,16 @@ inDateDOM.forEach((item, i) => {
     minDay(item.value);
   });
 });
+//在此設定一個ouDate節點的值切換時,其他outDate節點也會跟著變動
+outDateDOM.forEach((item, i) => {
+  item.addEventListener("change", function (e) {
+    e.preventDefault();
+    //當某個inDate節點值變更時,所有的inDate節點的值都等於該改變節點的值
+    outDateDOM.forEach((newitem) => {
+      newitem.value = item.value;
+    });
+  });
+});
 
 //函式：最大日期設定為起始日+90天
 function maxDay(startDate) {
@@ -325,25 +355,60 @@ bookAdults.forEach((item) => {
 bookKids.forEach((item) => {
   item.value = bookKidsNum;
 });
+
+
+//modal book-Now按鈕監聽
+btn_bookNow.addEventListener("click", function(e){
+  let no = e.target.getAttribute("data-roomno");
+          window.localStorage.setItem(
+            "bookRoomNameValue",
+            roomsDetailArray[no].name
+          );
+          window.localStorage.setItem("bookRoomId", roomsDetailArray[no].id);
+          let weekDay = new Date(Date.parse(inDateDOM[0].value)).getDay();
+          console.log("星期" + weekDay);
+          //如果不是星期六日(用getDay()取得0或6)則為平日價
+          //getDay()取得的星期一至星期日：數字為,1,2,3,4,5,6,0;
+          if ((weekDay == 5) | (weekDay == 6)) {
+            window.localStorage.setItem("bookWhatDayValue", "假日每晚");
+            window.localStorage.setItem(
+              "bookPriceValue",
+              roomsDetailArray[no].holidayPrice.toLocaleString()
+            );
+          } else {
+            window.localStorage.setItem("bookWhatDayValue", "平日每晚");
+            window.localStorage.setItem(
+              "bookPriceValue",
+              roomsDetailArray[no].normalDayPrice.toLocaleString()
+            );
+          }
+          window.localStorage.setItem("bookStartValue", inDateDOM[0].value);
+          window.localStorage.setItem("bookEndDateValue", outDateDOM[0].value);
+          window.location.href = "booking.html";
+});
 //設定成人人數選擇器監聽
 bookAdultsGroup.forEach((item) => {
   item.addEventListener("click", function (e) {
     console.log("click");
     if (
-      e.target.getAttribute("class").indexOf("input-group-text-prepend") != -1
+      e.target.getAttribute("class").indexOf("input-group-prepend") != -1
     ) {
-      bookAdultsNum--;
-      console.log("-");
+      if (bookAdultsNum > 0) {
+        bookAdultsNum--;
+      }
     } else if (
-      e.target.getAttribute("class").indexOf("input-group-text-append") != -1
+      e.target.getAttribute("class").indexOf("input-group-append") != -1
     ) {
-      bookAdultsNum++;
+      //如果大人+小孩數量小於4,此數量才能增加
+      if(bookAdultsNum+bookKidsNum < 4){
+        bookAdultsNum++;
+      }else{
+        alert("已經超過房型最大人數4人");
+      }
       console.log("+");
+      
     }
     console.log(bookAdultsNum);
-    if (bookAdultsNum < 0) {
-      bookAdultsNum = 0;
-    }
     //全部的bookAdults input value皆改變
     bookAdults.forEach((adults) => {
       adults.value = bookAdultsNum;
@@ -361,23 +426,28 @@ bookAdults.forEach((item) => {
 //設定兒童人數選擇器監聽
 bookKidsGroup.forEach((item) => {
   item.addEventListener("click", function (e) {
-    console.log("click");
     if (
-      e.target.getAttribute("class").indexOf("input-group-text-prepend") != -1
+      e.target.getAttribute("class").indexOf("input-group-prepend") != -1
     ) {
-      bookKidsNum--;
+      if (bookKidsNum > 0) {
+        bookKidsNum--;
+      }
     } else if (
-      e.target.getAttribute("class").indexOf("input-group-text-append") != -1
+      e.target.getAttribute("class").indexOf("input-group-append") != -1
     ) {
-      bookKidsNum++;
-    }
-    if (bookKidsNum < 0) {
-      bookKidsNum = 0;
+      //如果大人+小孩數量小於4,此數量才能增加
+      if(bookAdultsNum+bookKidsNum < 4){
+        bookKidsNum++;
+      }else{
+        alert("已經超過房型最大人數4人");
+      }
+      console.log("+");
+      
     }
     console.log(bookKidsNum);
-
-    bookKids.forEach((kids) => {
-      kids.value = bookKidsNum;
+    //全部的bookAdults input value皆改變
+    bookKids.forEach((Kids) => {
+      Kids.value = bookKidsNum;
     });
   });
 });
@@ -461,7 +531,7 @@ function indexPageRender(roomsdata) {
   //取得首頁房間列表節點
 
   //新增row列
-  let row_str = `<div class="indexRoomList-row row-5 mb-1"></div>`;
+  let row_str = `<div class="indexRoomList-row row-5"></div>`;
   let col_str = "";
   let datalength = roomsdata.length;
   //依據資料長度,一列會有3筆資料,因此需要datalength/3個列,但因已經有基底字串,因此-1
@@ -483,10 +553,10 @@ function indexPageRender(roomsdata) {
     console.log(`此時渲染的row=${row_num},col=${col_num}`);
     console.log(col_str);
     indexRoomList_row[row_num].innerHTML += `
-      <div class="col-5-4">
-         <a href="" class="relative d-block text-light roomCard" data-roomno=${no}>
+      <div class="indexRoomList-col col-5-4 col-md-5-6 col-sm-5-12">
+         <a href="" class="relative d-block text-light roomCard">
             <img src=${item.imageUrl} alt="" class="w-100 h-100">
-            <div class="absolute w-100 h-100 align-items-center  d-flex justify-content-center roomCard-float">
+            <div class="absolute w-100 h-100 align-items-center  d-flex justify-content-center roomCard-float" data-roomno=${no}>
                <p class="h2">${item.name}</p>
            </div>
          </a>
@@ -498,27 +568,29 @@ function indexPageRender(roomsdata) {
     } else {
       col_num++;
     }
+    no++;
   });
+  
 }
 //modal資料渲染
 function modalRender(roomDetail) {
   console.log(roomDetail);
   let slideStr = "";
   let priceStr = `
-  <li class="display-2 mr-2 d-flex align-items-center"><span class="small">平日每晚</span>$${roomDetail.normalDayPrice}</li>
-  <li class="display-2 mr-2 mt-4 d-flex align-items-center"><span class="small">假日每晚</span>$${roomDetail.holidayPrice}</li>
+  <li class="display-2 mr-2 d-flex align-items-center"><span class="small">平日每晚</span>$${roomDetail.normalDayPrice.toLocaleString()}</li>
+  <li class="display-2 mr-2 mt-4 d-flex align-items-center"><span class="small">假日每晚</span>$${roomDetail.holidayPrice.toLocaleString()}</li>
     `;
 
   let infroStr = `
-  <li class="col-16-2">
+  <li class="col-16-2 col-md-16-6">
     <p class="add-before-line">人數：${roomDetail.descriptionShort.GuestMax}</p>
     <p class="add-before-line mt-3">床型：${roomDetail.descriptionShort.Bed}</p>  
   </li>
-  <li class="col-16-2">
+  <li class="col-16-2 col-md-16-6">
     <p class="add-before-line">坪數：${roomDetail.descriptionShort.Footage}平方公尺</p>  
     <p class="add-before-line mt-3">餐點：附早餐</p>  
   </li>
-  <li class="col-16-4">
+  <li class="col-16-4 col-md-16-12 mt-md-5">
     <p class="add-before-line">checkIn 時間：最早 ${roomDetail.checkInAndOut.checkInEarly}、最晚 ${roomDetail.checkInAndOut.checkInLate}</p>  
     <p class="add-before-line mt-3">checkOut 時間：${roomDetail.checkInAndOut.checkOut}</p>  
   </li>
@@ -527,8 +599,8 @@ function modalRender(roomDetail) {
   modal_roomName.textContent = roomDetail.name;
   roomDetail.imageUrl.forEach(function (imgurl) {
     slideStr += ` 
-    <div class="swiper-slide text-center">
-    <img src=${imgurl} alt="" class="h-100">
+    <div class="swiper-slide">
+    <img src=${imgurl} alt="">
     </div>`;
   });
   modal_roomTops.innerHTML = slideStr;
@@ -538,25 +610,28 @@ function modalRender(roomDetail) {
   modal_roomInfro.innerHTML = infroStr;
   modal_roomBook.setAttribute("data-bookid", roomDetail.id);
 }
-//初始化rooms頁面資料
+//rooms頁面資料渲染
 function roomsPageRender(data) {
+  //渲染字串歸零 
   let str = "";
   let roomNo = 0;
-  //將所有資料進行加入渲染字串
   data.forEach(function (item) {
     console.log(item);
+    //如果該房型的最大人數大於或等於人數值,則進入渲染字串
+    if(item.descriptionShort.GuestMax >= serchNum){
     str += ` 
-    <div class="row-36 mb-6">
-    <div class="col-36-4">
+    <div class="row-36 mb-6 mb-md-8">
+    <div class="col-36-4 col-md-36-12">
         <div class="imgCard roomPicCard">
             <img src=${item.imageUrl} alt="">
             <a href="" class="h2 text-light">${item.name}</a>
         </div>
     </div>
-    <div class="card col-36-8 container-48 d-flex flex-column">
+    <div class="card col-36-8 col-md-36-12 mt-md-5">
+        <div class="container-48 h-100 d-flex flex-column px-0 ">
         <h3 class="h2 bold">${item.name}</h3>
         <div class="row-48 mt-3 card_body">
-            <div class="col-48-6 d-flex flex-column justify-content-between">
+            <div class="col-48-6 col-md-48-12 d-flex flex-column justify-content-between">
                 <div class="container-46 px-0">
                   <ul class="row-46">
                       <li class="col-46-6">
@@ -577,7 +652,7 @@ function roomsPageRender(data) {
                       </li>
                   </ul>
                 </div>
-                <div class="container-12 px-0 roomAmenities">
+                <div class="container-12 px-0 roomAmenities mt-md-5">
                     <ul class="row-12" >
                         <li class="text-center col-12-3">
                             <img src="img/icon_fridge.png" alt="" class="p">
@@ -612,12 +687,12 @@ function roomsPageRender(data) {
                 
                 
             </div>
-            <div class="d-flex flex-column col-48-5 ml-auto justify-content-between pt-3">
+            <div class="d-flex flex-column col-48-5 col-md-48-12 ml-auto justify-content-between pt-3">
                   <ul class="align-self-end">
                       <li class="display-2 mr-2 d-flex align-items-center"><span class="small">平日每晚</span>$${item.normalDayPrice.toLocaleString()}</li>
                       <li class="display-2 mr-2 mt-4 d-flex align-items-center"><span class="small">假日每晚</span>$${item.holidayPrice.toLocaleString()}</li>
                   </ul>
-                  <div class="align-self-end">
+                  <div class="align-self-end d-flex align-self-sm-stretch mt-md-5 justify-content-sm-between">
                       <a href="" class="btn btn-more bg-light text-dark mr-2" data-roomno=${roomNo} data-roomnd=${
       item.id
     }>MORE +</a>
@@ -628,10 +703,16 @@ function roomsPageRender(data) {
 
             </div>
         </div>
+        </div>
+        
         
     </div>
 
 </div>`;
+
+      }
+      //否則全部加入渲染字串
+    
     //用來放在class=data-roomNo 代表房間編號,可以辨識按more按紐要讀取roomDetailArray中哪一筆資料
     roomNo++;
   });
@@ -736,6 +817,7 @@ function roomsPageRender(data) {
     roomAmenitiesArray[i].innerHTML =
       `<ul class="row-12" >` + amenitiesStr + `</ul>`;
   }
+  loading_screen.setAttribute("class","d-none");
 }
 
 //首頁banner Swiper
