@@ -87,7 +87,7 @@ minDay(today);
 let getdata = {
   pathDomEvent: function () {
     console.log(path);
-    if (path.indexOf("/index.html") != -1 || path == "lofthome/" ) {
+    if (path.indexOf("/index.html") != -1 || path == "/lofthome/" ) {
       index_room_list = document.querySelector(".index-room-list");
       loading_screen = document.querySelector(".loadingscreen");
       //首頁節點增加監聽器
