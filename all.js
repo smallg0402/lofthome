@@ -86,8 +86,8 @@ minDay(today);
 //切換不同網頁時抓取節點及取的遠端資料函式物件
 let getdata = {
   pathDomEvent: function () {
-    console.log('path'+path);
-    if (path.indexOf("/index.html") != -1) {
+    console.log(path);
+    if (path.indexOf("/index.html") != -1 || path == "lofthome/" ) {
       index_room_list = document.querySelector(".index-room-list");
       loading_screen = document.querySelector(".loadingscreen");
       //首頁節點增加監聽器
