@@ -87,7 +87,7 @@ minDay(today);
 let getdata = {
   pathDomEvent: function () {
     console.log(path);
-    if (path.indexOf("/index.html") != -1 || path == "/lofthome/" ) {
+    if (path.indexOf("/index.html") != -1) {
       index_room_list = document.querySelector(".index-room-list");
       loading_screen = document.querySelector(".loadingscreen");
       //首頁節點增加監聽器
@@ -192,6 +192,23 @@ let getdata = {
           booking(window.localStorage.getItem("bookRoomId"));
         }
       });
+    }else if(path == "/lofthome/"){
+      index_room_list = document.querySelector(".index-room-list");
+      loading_screen = document.querySelector(".loadingscreen");
+      //首頁節點增加監聽器
+      index_room_list.addEventListener("click", function (e) {
+        e.preventDefault();
+        console.log(e.target);
+        if (e.target.getAttribute("class").indexOf("roomCard-float") != -1) {
+          body.setAttribute("class", "open-modal");
+          console.log(e.target);
+          let no = e.target.getAttribute("data-roomno");
+          console.log(no);
+          console.log(roomsDetailArray);
+          modalRender(roomsDetailArray[no]);
+        }
+      });
+
     }
   },
   getData: function () {
