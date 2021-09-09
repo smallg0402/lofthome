@@ -86,7 +86,7 @@ minDay(today);
 //切換不同網頁時抓取節點及取的遠端資料函式物件
 let getdata = {
   pathDomEvent: function () {
-    console.log(path);
+    console.log(path+'type'+typeof(path));
     if (path.indexOf("/index.html") != -1) {
       index_room_list = document.querySelector(".index-room-list");
       loading_screen = document.querySelector(".loadingscreen");
@@ -192,23 +192,6 @@ let getdata = {
           booking(window.localStorage.getItem("bookRoomId"));
         }
       });
-    }else if(path == "/lofthome/"){
-      index_room_list = document.querySelector(".index-room-list");
-      loading_screen = document.querySelector(".loadingscreen");
-      //首頁節點增加監聽器
-      index_room_list.addEventListener("click", function (e) {
-        e.preventDefault();
-        console.log(e.target);
-        if (e.target.getAttribute("class").indexOf("roomCard-float") != -1) {
-          body.setAttribute("class", "open-modal");
-          console.log(e.target);
-          let no = e.target.getAttribute("data-roomno");
-          console.log(no);
-          console.log(roomsDetailArray);
-          modalRender(roomsDetailArray[no]);
-        }
-      });
-
     }
   },
   getData: function () {
@@ -245,7 +228,7 @@ let getdata = {
           .then((response) => {
             console.log("final" + roomsDetailArray);
             //待所有房間的詳細資料皆載入後判斷為哪一個頁面再進行渲染
-            if (path.indexOf("/index.html") != -1) {
+            if (path.indexOf("/index.html") != -1 || path == '/lofthome/') {
               indexPageRender(roomsdata);
             } else if (path.indexOf("/rooms.html") != -1) {
               roomsPageRender(roomsDetailArray);
