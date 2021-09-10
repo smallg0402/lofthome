@@ -1034,7 +1034,9 @@ $screenThemes: md,sm;
                 width: 300px;
             }
             @include phone{
-                margin: auto;
+                margin-top: 25px;
+                margin-right: auto;
+                margin-left: auto;
             }
             
         }
@@ -1092,13 +1094,14 @@ $screenThemes: md,sm;
         .bookroom-submit{
             width: 132px;
             @include pad{
+                display: block;
                 margin-top: 25px;
                 height: 37px;
                 margin-left: 0;
                 width: 450px;
             }
             @include phone{
-                display: block;
+                width: 300px;
                 margin-left: auto;
                 margin-right: auto;
             }

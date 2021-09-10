@@ -3627,7 +3627,9 @@ body {
 
 @media (max-width: 767px) {
   .roomsBar form .inDateGroup, .roomsBar form .outdateGroup {
-    margin: auto;
+    margin-top: 25px;
+    margin-right: auto;
+    margin-left: auto;
   }
 }
 
@@ -3716,6 +3718,7 @@ body {
 
 @media (max-width: 768px) {
   .roomsBar form .bookroom-submit {
+    display: block;
     margin-top: 25px;
     height: 37px;
     margin-left: 0;
@@ -3725,7 +3728,7 @@ body {
 
 @media (max-width: 767px) {
   .roomsBar form .bookroom-submit {
-    display: block;
+    width: 300px;
     margin-left: auto;
     margin-right: auto;
   }
