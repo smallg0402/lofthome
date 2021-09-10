@@ -214,6 +214,12 @@ $screenThemes: md,sm;
         padding-right: 5px;
     }
 }
+.px-md-3{
+    @include pad{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
 .px-md-18{
     @include pad{
         padding-right: 18px;
@@ -265,6 +271,11 @@ $screenThemes: md,sm;
 .mr-24{
     margin-right: 120px;
 }
+.mr-sm-0{
+    @include phone{
+        margin-right: 0;
+    }
+}
 
 @media (max-width:767px){
     .mr-sm-0{
@@ -314,6 +325,11 @@ $screenThemes: md,sm;
         margin-top: 25px;
     }
 }
+.mt-sm-8{
+    @include phone{
+        margin-top: 40px;
+    }
+}
 .mb-md-8{
     @include pad{
         margin-bottom: 40px;
@@ -324,11 +340,17 @@ $screenThemes: md,sm;
         margin-bottom: 40px;
     }
 }
+
 .mb-1{
     margin-bottom: 5px;
 }
 .mb-2{
     margin-bottom: 10px;
+}
+.mb-sm-2{
+    @include phone{
+        margin-bottom: 10px;
+    }
 }
 .mb-3{
     margin-bottom: 15px;
@@ -588,6 +610,15 @@ $screenThemes: md,sm;
     display: block;
     height: 1px;
     background: black;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    @include pad{
+        width: 98%;
+    }
+    @include phone{
+        width: 95%;
+    }
     
 }
 //Swiper
@@ -1030,6 +1061,7 @@ $screenThemes: md,sm;
         
         .inDateGroup,.outdateGroup{
             width: 244px;
+         
             @include pad{
                 width: 300px;
             }

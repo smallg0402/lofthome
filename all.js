@@ -187,9 +187,11 @@ let getdata = {
         let btnValue = e.target.getAttribute("id");
         console.log(btnValue);
         if (btnValue == "btn-back") {
+          //將網址導向rooms.html頁
           window.location.href = "rooms.html";
         } else if (btnValue == "btn-bookCheck") {
-          booking(window.localStorage.getItem("bookRoomId"));
+          // booking(window.localStorage.getItem("bookRoomId"));
+          alert("已預定成功");
         }
       });
     }
