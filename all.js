@@ -28,10 +28,12 @@ const btn_bookNow = document.querySelector(".btn-bookNow");
 
 //首頁節點
 let index_room_list;
+let serchRoom_submit;
 //rooms頁節點
 let rooms_roomList;
 
 let loading_screen;
+let loading_screen_classList;
 
 //booking 頁節點
 // const formBooking = document.querySelector("#formBooking");
@@ -83,13 +85,29 @@ outDayNeed(today);
 maxDay(today);
 minDay(today);
 
+//成人人數預設
+bookAdults.forEach((item) => {
+  item.value = bookAdultsNum;
+});
+//兒童人數預設
+bookKids.forEach((item) => {
+  item.value = bookKidsNum;
+});
+
 //切換不同網頁時抓取節點及取的遠端資料函式物件
 let getdata = {
+  //不同頁面的節點設定
   pathDomEvent: function () {
     console.log(path+'type'+typeof(path));
+    //在首頁時
     if (path.indexOf("/index.html") != -1 || path == '/lofthome/') {
       index_room_list = document.querySelector(".index-room-list");
-      loading_screen = document.querySelector(".loadingscreen");
+      serchRoom_submit = document.querySelector(".serchRoom-submit"); 
+      //要傳送給rooms頁的數值預設為0
+      window.localStorage.setItem("bookAdults",0);
+      window.localStorage.setItem("bookKids",0);
+
+      
       //首頁節點增加監聽器
       index_room_list.addEventListener("click", function (e) {
         e.preventDefault();
@@ -103,19 +121,70 @@ let getdata = {
           modalRender(roomsDetailArray[no]);
         }
       });
+      serchRoom_submit.addEventListener("click",function(e){
+        e.preventDefault();
+        window.localStorage.setItem("inDate",inDateDOM[0].value);
+        window.localStorage.setItem("outDate",outDateDOM[0].value);
+        window.localStorage.setItem("bookAdults",bookAdultsNum);
+        window.localStorage.setItem("bookKids",bookKidsNum);
+        //不需要完整網址嗎？為什麼依然有效
+        window.location.href = "rooms.html";
+        
+        
+        
+
+      })
+      //在rooms頁時
     } else if (path.indexOf("/rooms.html") != -1) {
       //rooms節點
       console.log(this);
       rooms_roomList = document.querySelector(".rooms_roomList");
       loading_screen = document.querySelector(".loading-screen");
       let room_serch = document.querySelector(".bookroom-submit");
+      let rooms_serchingOut = document.querySelector(".serchingOut");
+      let rooms_serchingOut_Num = document.querySelector(".serchingOut-Num");
+      loading_screen = document.querySelector(".loading-screen");
+      loading_screen_classList = document.querySelector(".loading-screen").getAttribute("class");
+
+      
+      let indexSerch_adults;
+      let indexSerch_kids;
+      //將localstorage取出的值轉回原本的整數
+      indexSerch_adults = JSON.parse(window.localStorage.getItem("bookAdults"));
+      indexSerch_kids = JSON.parse(window.localStorage.getItem("bookKids"));
+      //讀取是否有首頁搜尋的欄位數值是否為0,若否則改變bookAdultsNum/bookAdultsNum/serchNum的數值
+      if(indexSerch_adults != 0){
+        bookAdultsNum = indexSerch_adults;
+        bookAdults.forEach((item) => {
+          item.value = indexSerch_adults;
+        });
+        window.localStorage.setItem("bookAdults",0);
+       
+
+      }
+      if(indexSerch_kids != 0){
+        bookKidsNum = indexSerch_kids;
+        bookKids.forEach((item) => {
+          item.value = indexSerch_kids;
+        });
+        window.localStorage.setItem("bookKids",0);
+      }
+
+      serchNum = bookAdultsNum + bookKidsNum;
       
 
       //roomserchBar點擊事件
       room_serch.addEventListener("click",function(e){
         e.preventDefault();
-        serchNum = bookKidsNum+bookAdultsNum;
-        roomsPageRender(roomsDetailArray);
+        loading_screen_classList = loading_screen_classList.replace("d-none","d-block");
+        loading_screen.setAttribute("class",loading_screen_classList);
+        //過2秒後再顯示搜尋結果
+        setTimeout(function(){
+          serchNum = bookKidsNum+bookAdultsNum;
+          rooms_serchingOut.setAttribute("class","d-block");
+          rooms_serchingOut_Num.textContent = serchNum; 
+          roomsPageRender(roomsDetailArray);
+        },2000);
         
 
       })
@@ -350,14 +419,9 @@ function outDayNeed(inDate) {
   });
 }
 
-//成人人數預設
-bookAdults.forEach((item) => {
-  item.value = bookAdultsNum;
-});
-//兒童人數預設
-bookKids.forEach((item) => {
-  item.value = bookKidsNum;
-});
+
+
+
 
 
 //modal book-Now按鈕監聽
@@ -393,23 +457,24 @@ btn_bookNow.addEventListener("click", function(e){
 bookAdultsGroup.forEach((item) => {
   item.addEventListener("click", function (e) {
     console.log("click");
-    if (
-      e.target.getAttribute("class").indexOf("input-group-prepend") != -1
-    ) {
+    if (e.target.getAttribute("class").indexOf("input-group-prepend") != -1) {
       if (bookAdultsNum > 0) {
-        bookAdultsNum--;
+        if(bookAdultsNum+bookKidsNum == 1){
+          alert("住房人數不得低於1人");
+        }else{
+          bookAdultsNum--;
+        }
+        
       }
-    } else if (
-      e.target.getAttribute("class").indexOf("input-group-append") != -1
-    ) {
+    } else if (e.target.getAttribute("class").indexOf("input-group-append") != -1) {
       //如果大人+小孩數量小於4,此數量才能增加
       if(bookAdultsNum+bookKidsNum < 4){
         bookAdultsNum++;
       }else{
-        alert("已經超過房型最大人數4人");
+        alert("已經超過所有房型最大人數4人");
       }
       console.log("+");
-      
+  
     }
     console.log(bookAdultsNum);
     //全部的bookAdults input value皆改變
@@ -429,15 +494,15 @@ bookAdults.forEach((item) => {
 //設定兒童人數選擇器監聽
 bookKidsGroup.forEach((item) => {
   item.addEventListener("click", function (e) {
-    if (
-      e.target.getAttribute("class").indexOf("input-group-prepend") != -1
-    ) {
-      if (bookKidsNum > 0) {
-        bookKidsNum--;
+    if (e.target.getAttribute("class").indexOf("input-group-prepend") != -1) {
+      if (bookAdultsNum > 0){
+        if(bookAdultsNum+bookKidsNum == 1){
+          alert("住房人數不得低於1人");
+        }else{
+          bookKidsNum--;
+        }
       }
-    } else if (
-      e.target.getAttribute("class").indexOf("input-group-append") != -1
-    ) {
+    }else if (e.target.getAttribute("class").indexOf("input-group-append") != -1) {
       //如果大人+小孩數量小於4,此數量才能增加
       if(bookAdultsNum+bookKidsNum < 4){
         bookKidsNum++;
@@ -820,7 +885,10 @@ function roomsPageRender(data) {
     roomAmenitiesArray[i].innerHTML =
       `<ul class="row-12" >` + amenitiesStr + `</ul>`;
   }
-  loading_screen.setAttribute("class","d-none");
+  //字串的replace並不會改變字串本身
+  loading_screen_classList = loading_screen_classList.replace("d-block","d-none");
+  console.log(loading_screen_classList);
+  loading_screen.setAttribute("class",loading_screen_classList);
 }
 
 //首頁banner Swiper
