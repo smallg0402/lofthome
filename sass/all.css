@@ -3573,6 +3573,7 @@ body {
 }
 
 .serchRoom .inDateGroup, .serchRoom .outDateGroup {
+  width: 100%;
   /*這是控制上下小箭頭的*/
 }
 
