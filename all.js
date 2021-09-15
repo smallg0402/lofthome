@@ -76,7 +76,7 @@ if (dd < 10) {
 }
 
 $(document).ready(function(){
-  $(".inDate").datepicker();
+  $("#inDate").datepicker();
 });
 
 
