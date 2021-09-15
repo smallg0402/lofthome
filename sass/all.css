@@ -3589,7 +3589,7 @@ body {
 }
 
 .serchRoom .inDateGroup input::-webkit-datetime-edit, .serchRoom .outDateGroup input::-webkit-datetime-edit {
-  padding: 10px 0;
+  padding: 10px;
 }
 
 .serchRoom .inDateGroup input::-webkit-inner-spin-button, .serchRoom .outDateGroup input::-webkit-inner-spin-button {
