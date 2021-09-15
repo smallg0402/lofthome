@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -3571,6 +3572,10 @@ body {
   }
 }
 
+.serchRoom .inDateGroup, .serchRoom .outDateGroup {
+  /*這是控制上下小箭頭的*/
+}
+
 .serchRoom .inDateGroup label, .serchRoom .outDateGroup label {
   font-size: 1rem;
   display: block;
@@ -3584,6 +3589,16 @@ body {
 
 .serchRoom .inDateGroup input::-webkit-datetime-edit, .serchRoom .outDateGroup input::-webkit-datetime-edit {
   padding: 10px 0;
+}
+
+.serchRoom .inDateGroup input::-webkit-inner-spin-button, .serchRoom .outDateGroup input::-webkit-inner-spin-button {
+  visibility: hidden;
+}
+
+.serchRoom .inDateGroup input::-webkit-calendar-picker-indicator, .serchRoom .outDateGroup input::-webkit-calendar-picker-indicator {
+  background: url(../img/calendar_home@2x.png);
+  background-size: contain;
+  margin-right: 10px;
 }
 
 .serchRoom .bookKidsGroup, .serchRoom .bookAdultsGroup {

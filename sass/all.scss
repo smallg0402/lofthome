@@ -1022,9 +1022,14 @@ $screenThemes: md,sm;
             display: block;
             width: 100%;
         }
-        input::-webkit-datetime-edit{
-            padding: 10px 0;
+        input::-webkit-datetime-edit{padding: 10px 0;}
+        input::-webkit-inner-spin-button { visibility: hidden; }    /*這是控制上下小箭頭的*/
+        input::-webkit-calendar-picker-indicator {  
+          background: url(../img/calendar_home@2x.png); 
+          background-size: contain ;
+          margin-right: 10px; 
         }
+//     /*這是控制下拉小箭頭的*/
     }
   
     .bookKidsGroup,.bookAdultsGroup{
