@@ -3574,6 +3574,7 @@ body {
 
 .serchRoom .inDateGroup, .serchRoom .outDateGroup {
   width: 100%;
+  /*控制年月日這個區域的*/
   /*這是控制上下小箭頭的*/
 }
 
@@ -3588,7 +3589,7 @@ body {
   width: 100%;
 }
 
-.serchRoom .inDateGroup input::-webkit-datetime-edit, .serchRoom .outDateGroup input::-webkit-datetime-edit {
+.serchRoom .inDateGroup input::-webkit-datetime-edit-fields-wrapper, .serchRoom .outDateGroup input::-webkit-datetime-edit-fields-wrapper {
   padding: 10px;
 }
 

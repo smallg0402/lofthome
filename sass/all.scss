@@ -1023,7 +1023,7 @@ $screenThemes: md,sm;
             display: block;
             width: 100%;
         }
-        input::-webkit-datetime-edit{padding: 10px;}
+        input::-webkit-datetime-edit-fields-wrapper { padding: 10px; }    /*控制年月日這個區域的*/
         input::-webkit-inner-spin-button { visibility: hidden; }    /*這是控制上下小箭頭的*/
         input::-webkit-calendar-picker-indicator {  
           background: url(../img/calendar_home@2x.png); 
