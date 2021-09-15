@@ -75,6 +75,9 @@ if (dd < 10) {
   dd = "0" + dd;
 }
 
+
+$('#inDate').datepicker();
+
 //所有input date預設起始日期為今日
 inDateDOM.forEach((item) => {
   item.value = `${yyyy}-${mm}-${dd}`;
