@@ -973,24 +973,24 @@ $screenThemes: md,sm;
 
 
 
-/*修改input date樣式*/
-/*  修改日曆控制元件型別 */
-::-webkit-datetime-edit { padding: 3px;}  /*控制編輯區域的*/
-::-webkit-datetime-edit-fields-wrapper { 
-    padding: 0.5rem;
-}    /*控制年月日這個區域的*/
-::-webkit-datetime-edit-text { color: #333; padding: 0 .5em; }  /*這是控制年月日之間的斜線或短橫線的*/
-::-webkit-datetime-edit-year-field { color: #333; }    /*控制年文字, 如2013四個字母佔據的那片地方*/   
-::-webkit-datetime-edit-month-field { color: #333; }    /*控制月份*/
-::-webkit-datetime-edit-day-field { color: #333; }    /*控制具體日子*/
-::-webkit-inner-spin-button { visibility: hidden; }    /*這是控制上下小箭頭的*/
-::-webkit-calendar-picker-indicator {  
-    background: url(../img/calendar_home@2x.png); 
-    background-size: contain ;
-    margin-right: 10px; 
-    /*這是控制下拉小箭頭的*/
+// /*修改input date樣式*/
+// /*  修改日曆控制元件型別 */
+// ::-webkit-datetime-edit { padding: 3px;}  /*控制編輯區域的*/
+// ::-webkit-datetime-edit-fields-wrapper { 
+//     padding: 0.5rem;
+// }    /*控制年月日這個區域的*/
+// ::-webkit-datetime-edit-text { color: #333; padding: 0 .5em; }  /*這是控制年月日之間的斜線或短橫線的*/
+// ::-webkit-datetime-edit-year-field { color: #333; }    /*控制年文字, 如2013四個字母佔據的那片地方*/   
+// ::-webkit-datetime-edit-month-field { color: #333; }    /*控制月份*/
+// ::-webkit-datetime-edit-day-field { color: #333; }    /*控制具體日子*/
+// ::-webkit-inner-spin-button { visibility: hidden; }    /*這是控制上下小箭頭的*/
+// ::-webkit-calendar-picker-indicator {  
+//     background: url(../img/calendar_home@2x.png); 
+//     background-size: contain ;
+//     margin-right: 10px; 
+//     /*這是控制下拉小箭頭的*/
     
-}
+// }
 
 
 //首頁搜尋區域設定
@@ -1023,7 +1023,7 @@ $screenThemes: md,sm;
             width: 100%;
         }
         input::-webkit-datetime-edit{
-            padding: 1px 0;
+            padding: 10px 0;
         }
     }
   
