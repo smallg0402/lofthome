@@ -3617,10 +3617,19 @@ body {
   }
 }
 
-.serchRoom .form-group label {
+.serchRoom .inDateGroup label, .serchRoom .outDateGroup label {
   font-size: 1rem;
   display: block;
   margin-bottom: 10px;
+}
+
+.serchRoom .inDateGroup input, .serchRoom .outDateGroup input {
+  display: block;
+  width: 100%;
+}
+
+.serchRoom .inDateGroup input::-webkit-datetime-edit, .serchRoom .outDateGroup input::-webkit-datetime-edit {
+  padding: 1px 0;
 }
 
 .serchRoom .bookKidsGroup, .serchRoom .bookAdultsGroup {

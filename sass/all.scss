@@ -1012,11 +1012,18 @@ $screenThemes: md,sm;
         
     }
       
-    .form-group{
+    .inDateGroup,.outDateGroup{
         label{
             font-size: 1rem;
             display: block;
             margin-bottom: 10px;
+        }
+        input{
+            display: block;
+            width: 100%;
+        }
+        input::-webkit-datetime-edit{
+            padding: 1px 0;
         }
     }
   

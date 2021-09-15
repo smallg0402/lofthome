@@ -75,9 +75,7 @@ if (dd < 10) {
   dd = "0" + dd;
 }
 
-$(document).ready(function(){
-  $("#inDate").datepicker();
-});
+
 
 
 //所有input date預設起始日期為今日
