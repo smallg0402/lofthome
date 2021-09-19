@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -3574,8 +3573,6 @@ body {
 
 .serchRoom .inDateGroup, .serchRoom .outDateGroup {
   width: 100%;
-  /*控制年月日這個區域的*/
-  /*這是控制上下小箭頭的*/
 }
 
 .serchRoom .inDateGroup label, .serchRoom .outDateGroup label {
@@ -3587,20 +3584,7 @@ body {
 .serchRoom .inDateGroup input, .serchRoom .outDateGroup input {
   display: block;
   width: 100%;
-}
-
-.serchRoom .inDateGroup input::-webkit-datetime-edit-fields-wrapper, .serchRoom .outDateGroup input::-webkit-datetime-edit-fields-wrapper {
-  padding: 10px;
-}
-
-.serchRoom .inDateGroup input::-webkit-inner-spin-button, .serchRoom .outDateGroup input::-webkit-inner-spin-button {
-  visibility: hidden;
-}
-
-.serchRoom .inDateGroup input::-webkit-calendar-picker-indicator, .serchRoom .outDateGroup input::-webkit-calendar-picker-indicator {
-  background: url(../img/calendar_home@2x.png);
-  background-size: contain;
-  margin-right: 10px;
+  padding-left: 5px;
 }
 
 .serchRoom .bookKidsGroup, .serchRoom .bookAdultsGroup {
@@ -3654,6 +3638,10 @@ body {
 
 .roomsBar form .inDateGroup, .roomsBar form .outdateGroup {
   width: 244px;
+}
+
+.roomsBar form .inDateGroup input, .roomsBar form .outdateGroup input {
+  padding: 10px 5px;
 }
 
 @media (max-width: 768px) {

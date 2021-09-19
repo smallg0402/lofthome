@@ -76,20 +76,57 @@ if (dd < 10) {
 }
 
 
-$(document).ready(function(){
-  $('#serchInDate').datepicker();
-  $('#serchOutDate').datepicker();
-})
 
-//所有input date預設起始日期為今日
-inDateDOM.forEach((item) => {
-  item.value = `${yyyy}-${mm}-${dd}`;
-  console.log(`起始日期 ${item.value}`);
-});
 
-outDayNeed(today);
-maxDay(today);
-minDay(today);
+// //所有input date預設起始日期為今日
+// inDateDOM.forEach((item) => {
+//   item.value = `${yyyy}-${mm}-${dd}`;
+//   console.log(`起始日期 ${item.value}`);
+// });
+
+
+
+
+//當起始日期更改時,若結束日期-起始日期<86400000毫秒(一天),則變更結束日期,否則只更改最大日期
+//邏輯思路：改變訂房日期->取得節點上退房及進房日期數值->退房日期數值-進房日期數值是否>1天
+//否：改變退房日期,為訂房日期+1天
+//是：不改變退房日期
+//每個inDate節點都設定change監聽器
+// inDateDOM.forEach((item, i) => {
+//   item.addEventListener("change", function (e) {
+//     console.log(item.value);
+//     e.preventDefault();
+//     $(".inDate").each(function(index){
+//       //當某個inDate節點值變更時,所有的inDate節點的值都等於該改變節點的值
+//       $(this).datepicker('setDate',new Date(item.value));
+//     });
+//     $(".outDate").each(function(index){
+//       //當某個inDate節點值變更時,所有的inDate節點的值都等於該改變節點的值
+//       $(this).datepicker('setDate',new Date(item.value) + 86400000);
+//       $(this).datepicker({ minDate: new Date(item.value)});
+//     });
+//     // inDateDOM.forEach((newitem) => {
+//     //   newitem.value = item.value;
+//     // });
+//     //讀取改變的inDate節點對應的outDate節點值再進行計算
+//     // let outDateInt = Date.parse(outDateDOM[i].value);
+//     // let inDateInt = Date.parse(item.value);
+//     // if (outDateInt - inDateInt < 86400000) {
+//     //   //如果符合條件則更改所有outDate節點值
+//     //   outDayNeed(item.value);
+//     // }
+//     //更改所有outDate節點最大值
+//     // maxDay(item.value);
+//     //更改所有outDate節點最小值
+//     // minDay(item.value);
+//   });
+// });
+
+
+
+// outDayNeed(today);
+// maxDay(today);
+// minDay(today);
 
 //成人人數預設
 bookAdults.forEach((item) => {
@@ -107,6 +144,22 @@ let getdata = {
     console.log(path+'type'+typeof(path));
     //在首頁時
     if (path.indexOf("/index.html") != -1 || path == '/lofthome/') {
+      $(document).ready(function(){
+        $('.inDate').each(function(index){
+          $(this).datepicker();
+          $(this).datepicker("setDate", new Date());
+        });
+        $(".outDate").each(function(index){
+          //設定退房日期選擇最大限制是本日+90天
+           //設定退房日期選擇最小限制是本日+1天
+          //jQuery的datePicker設定ㄓ有分初始設定及後來更改,寫法不同
+          $(this).datepicker({minDate: 1,maxDate: "+90d"});
+          //設定退房日期預設是本日+1天
+          //jQuery的方法需在啟動之後才能使用
+          $(this).datepicker("setDate", +1);
+        });
+        
+      })
       index_room_list = document.querySelector(".index-room-list");
       serchRoom_submit = document.querySelector(".serchRoom-submit"); 
       //要傳送給rooms頁的數值預設為0
@@ -144,6 +197,22 @@ let getdata = {
     } else if (path.indexOf("/rooms.html") != -1) {
       //rooms節點
       console.log(this);
+      $(document).ready(function(){
+        $('.inDate').each(function(index){
+          $(this).datepicker();
+          $(this).datepicker("setDate", new Date());
+        });
+        $(".outDate").each(function(index){
+          //設定退房日期選擇最大限制是本日+90天
+           //設定退房日期選擇最小限制是本日+1天
+          //jQuery的datePicker設定ㄓ有分初始設定及後來更改,寫法不同
+          $(this).datepicker({minDate: 1,maxDate: "+90d"});
+          //設定退房日期預設是本日+1天
+          //jQuery的方法需在啟動之後才能使用
+          $(this).datepicker("setDate", +1);
+        });
+        
+      })
       rooms_roomList = document.querySelector(".rooms_roomList");
       loading_screen = document.querySelector(".loading-screen");
       let room_serch = document.querySelector(".bookroom-submit");
@@ -250,8 +319,12 @@ let getdata = {
       bookRoomNameDOM.textContent = window.localStorage.getItem(
         "bookRoomNameValue"
       );
-      bookStartDateDOM.value = window.localStorage.getItem("bookStartValue");
-      bookEndDateDOM.value = window.localStorage.getItem("bookEndDateValue");
+      $(document).ready(function(){
+         $('.inDate').datepicker();
+         $('.inDate').datepicker("setDate", window.localStorage.getItem("bookStartValue"));
+         $('.outDate').datepicker();
+         $('.outDate').datepicker("setDate", window.localStorage.getItem("bookEndDateValue"));
+      });
       bookPriceDOM.textContent = window.localStorage.getItem("bookPriceValue");
       bookWhatDayDOM.textContent = window.localStorage.getItem(
         "bookWhatDayValue"
@@ -346,31 +419,7 @@ function minDay(startdate) {
   });
 }
 
-//當起始日期更改時,若結束日期-起始日期<86400000毫秒(一天),則變更結束日期,否則只更改最大日期
-//邏輯思路：改變訂房日期->取得節點上退房及進房日期數值->退房日期數值-進房日期數值是否>1天
-//否：改變退房日期,為訂房日期+1天
-//是：不改變退房日期
-//每個inDate節點都設定change監聽器
-inDateDOM.forEach((item, i) => {
-  item.addEventListener("change", function (e) {
-    e.preventDefault();
-    //當某個inDate節點值變更時,所有的inDate節點的值都等於該改變節點的值
-    inDateDOM.forEach((newitem) => {
-      newitem.value = item.value;
-    });
-    //讀取改變的inDate節點對應的outDate節點值再進行計算
-    let outDateInt = Date.parse(outDateDOM[i].value);
-    let inDateInt = Date.parse(item.value);
-    if (outDateInt - inDateInt < 86400000) {
-      //如果符合條件則更改所有outDate節點值
-      outDayNeed(item.value);
-    }
-    //更改所有outDate節點最大值
-    maxDay(item.value);
-    //更改所有outDate節點最小值
-    minDay(item.value);
-  });
-});
+
 //在此設定一個ouDate節點的值切換時,其他outDate節點也會跟著變動
 outDateDOM.forEach((item, i) => {
   item.addEventListener("change", function (e) {
@@ -385,44 +434,52 @@ outDateDOM.forEach((item, i) => {
 //函式：最大日期設定為起始日+90天
 function maxDay(startDate) {
   let maxOutDate = new Date(Date.parse(startDate) + 86400000 * 90);
-  let maxoutyyyy = maxOutDate.getFullYear();
-  let maxoutmm = maxOutDate.getMonth() + 1;
-  let maxoutdd = maxOutDate.getDate();
-
-  if (maxoutmm < 10) {
-    maxoutmm = "0" + maxoutmm;
-  }
-  if (maxoutdd < 10) {
-    maxoutdd = "0" + maxoutdd;
-  }
-
-  outDateDOM.forEach((item) => {
-    item.setAttribute("max", `${maxoutyyyy}-${maxoutmm}-${maxoutdd}`);
+  $(".outDate").each(function(index){
+    $(this).datepicker({maxDate: "+90D"})
   });
+  
+
+  //原生寫法所需
+  // if (maxoutmm < 10) {
+  //   maxoutmm = "0" + maxoutmm;
+  // }
+  // if (maxoutdd < 10) {
+  //   maxoutdd = "0" + maxoutdd;
+  // }
+  // let maxoutyyyy = maxOutDate.getFullYear();
+  // let maxoutmm = maxOutDate.getMonth() + 1;
+  // let maxoutdd = maxOutDate.getDate();
+  // outDateDOM.forEach((item) => {
+  //   item.setAttribute("max", `${maxoutyyyy}-${maxoutmm}-${maxoutdd}`);
+  // });
 }
 
 //函式： 設定outDate為起始日+1天
 function outDayNeed(inDate) {
   //預設退房日期為起始+1天;
   //+1天的毫秒為今日+86400000秒,使用毫秒轉為日期格式
-  let outDate = new Date(Date.parse(inDate) + 86400000);
+  // let outDate = new Date(Date.parse(inDate) + 86400000);
 
-  //獲取 yyyy,mm,dd
-  let outyyyy = outDate.getFullYear();
-  let outmm = outDate.getMonth() + 1;
-  let outdd = outDate.getDate();
+  // $('.ouDate').each(funtion(index){
+  //    $(this).datepicker("setDate",new Date());
+  // });
 
-  //mm及dd字串格式判定
-  if (outmm < 10) {
-    outmm = "0" + outmm;
-  }
-  if (outdd < 10) {
-    outdd = "0" + outdd;
-  }
+  // //獲取 yyyy,mm,dd
+  // let outyyyy = outDate.getFullYear();
+  // let outmm = outDate.getMonth() + 1;
+  // let outdd = outDate.getDate();
 
-  outDateDOM.forEach((item) => {
-    item.value = `${outyyyy}-${outmm}-${outdd}`;
-  });
+  // //mm及dd字串格式判定
+  // if (outmm < 10) {
+  //   outmm = "0" + outmm;
+  // }
+  // if (outdd < 10) {
+  //   outdd = "0" + outdd;
+  // }
+
+  // outDateDOM.forEach((item) => {
+  //   item.value = `${outyyyy}-${outmm}-${outdd}`;
+  // });
 }
 
 

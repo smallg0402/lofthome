@@ -18,6 +18,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
     />
+    <link rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.min.css">
     <link
       rel="stylesheet"
       href="https://unpkg.com/swiper/swiper-bundle.min.css"
@@ -45,10 +46,10 @@
       <form class="d-flex container flex-md-wrap
       justify-content-md-center d-sm-block">
         <div class="form-group inDateGroup mr-3 mr-sm-0">
-            <input type="date" name="inId" class="form-control bg-light border-0 modal-input-control inDate w-100" id="bookStartDateDOM">
+            <input type="text" name="inId" class="form-control bg-light border-0 modal-input-control inDate w-100" id="bookStartDateDOM">
         </div>
         <div class="form-group outdateGroup mr-3 mr-sm-0">
-            <input type="date" name="outId" class="form-control bg-light border-0 modal-input-control outDate w-100" id="bookEndDateDOM">
+            <input type="text" name="outId" class="form-control bg-light border-0 modal-input-control outDate w-100" id="bookEndDateDOM">
         </div>
         
         <div class="form-group mr-3 mt-md-5 mr-sm-0">
@@ -304,9 +305,9 @@
 
       <div class="mt-6 bg-third py-5 ">
         <div class="d-flex modal-dialog-container modal-book">
-            <form action="" class="d-flex w-100 flex-sm-column align-items-sm-center">
-             <input type="date" name="inId" class="inDate form-control bg-light border-0 modal-input-control mr-3">
-             <input type="date" name="outId" class="outDate form-control bg-light border-0 modal-input-control mr-3">
+            <form action="" class="d-flex w-100">
+             <input type="text" name="inId" class="inDate form-control bg-light border-0 modal-input-control mr-3">
+             <input type="text" name="outId" class="outDate form-control bg-light border-0 modal-input-control mr-3">
              <div class="bookAdultsGroup mr-3">
              <div class="input-group w-100 d-flex h-100">
                     <button type="button" class="input-group-prepend bg-dark text-light">-
@@ -327,7 +328,7 @@
                     </button>
              </div>
             </div>
-             <button class="bg-dark text-light modal-bookroom-submit btn-bookNow  border ml-auto modal-roomBook">Book Now</button>
+             <button class="bg-dark text-light modal-bookroom-submit border ml-auto modal-roomBook btn-bookNow">Book Now</button>
             </form>
         </div>
     </div>
@@ -349,6 +350,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="all.js"></script>
   </body>
