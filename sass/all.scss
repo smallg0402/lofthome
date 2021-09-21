@@ -531,6 +531,11 @@ $screenThemes: md,sm;
 .text-center{
     text-align: center;
 }
+.text-md-center{
+    @include pad{
+        text-align: center;
+    }
+}
 .text-sm-center{
     @include phone{
         text-align: center;
@@ -1480,11 +1485,20 @@ $screenThemes: md,sm;
 
 }
 
-//首頁清單
-.indexRoomList-col{
-    @include phone{
+//首頁清單欄位樣式設定
+.indexRoomList-col + .indexRoomList-col + .indexRoomList-col + .indexRoomList-col{
+   margin-top: 5px;
+    
+    
+}
+.indexRoomList-col + .indexRoomList-col + .indexRoomList-col{
+    @include pad{
         margin-top: 5px;
-        margin-bottom: 5px;
+    }
+}
+.indexRoomList-col ~ .indexRoomList-col{
+    @include phone{
+        margin-top: 8px;
     }
 }
 //footer區

@@ -3120,6 +3120,12 @@ body {
   text-align: center;
 }
 
+@media (max-width: 768px) {
+  .text-md-center {
+    text-align: center;
+  }
+}
+
 @media (max-width: 767px) {
   .text-sm-center {
     text-align: center;
@@ -4038,10 +4044,19 @@ body {
   }
 }
 
-@media (max-width: 767px) {
-  .indexRoomList-col {
+.indexRoomList-col + .indexRoomList-col + .indexRoomList-col + .indexRoomList-col {
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .indexRoomList-col + .indexRoomList-col + .indexRoomList-col {
     margin-top: 5px;
-    margin-bottom: 5px;
+  }
+}
+
+@media (max-width: 767px) {
+  .indexRoomList-col ~ .indexRoomList-col {
+    margin-top: 8px;
   }
 }
 

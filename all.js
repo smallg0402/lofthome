@@ -125,8 +125,40 @@ if (dd < 10) {
 
 
 // outDayNeed(today);
-// maxDay(today);
+// maxDay(today);  
 // minDay(today);
+
+//---------首頁.rooms.booking頁入其輸入欄啟動&規則設定通用------
+ //onSelect為設定,若datepicker已經啟動,要增加設定必須使用
+    //$('#datepicker').datepicker('option', 'onSelect', function() { /* do stuff */ });
+
+$(document).ready(function(){
+  $('.inDate').each(function(index){
+    $(this).datepicker({dateFormat: "yy-mm-dd",onSelect: function(){
+      let newIndate = $(this).datepicker("getDate");
+      console.log('newIndate'+newIndate);
+      $('.outDate').each(function(){
+        $(this).datepicker({minDate: 1,maxDate: "+90d", dateFormat: "yy-mm-dd"});
+        $(this).datepicker( "option", "maxDate", new Date(Date.parse(newIndate)+86400000*90));
+        $(this).datepicker( "option","minDate", new Date(Date.parse(newIndate)+86400000));
+        $(this).datepicker("setDate", new Date(Date.parse(newIndate)+86400000));
+      });
+    }});
+    //setDate為方法
+    $(this).datepicker("setDate", new Date());
+  });
+  //設定退房日期選擇最大限制是本日+90天
+  //設定退房日期選擇最小限制是本日+1天
+  //jQuery的datePicker設定有分初始設定及後來更改,寫法不同
+  //設定退房日期預設是本日+1天
+  //jQuery的方法需在啟動之後才能使用
+  $(".outDate").each(function(index){
+    $(this).datepicker({minDate: 1,maxDate: "+90d", dateFormat: "yy-mm-dd"});
+    $(this).datepicker("setDate", +1);
+  });
+  
+})
+//---------首頁.rooms.booking頁入其輸入欄啟動&規則設定通用------
 
 //成人人數預設
 bookAdults.forEach((item) => {
@@ -144,26 +176,11 @@ let getdata = {
     console.log(path+'type'+typeof(path));
     //在首頁時
     if (path.indexOf("/index.html") != -1 || path == '/lofthome/') {
-      $(document).ready(function(){
-        $('.inDate').each(function(index){
-          $(this).datepicker();
-          $(this).datepicker("setDate", new Date());
-        });
-        $(".outDate").each(function(index){
-          //設定退房日期選擇最大限制是本日+90天
-           //設定退房日期選擇最小限制是本日+1天
-          //jQuery的datePicker設定ㄓ有分初始設定及後來更改,寫法不同
-          $(this).datepicker({minDate: 1,maxDate: "+90d"});
-          //設定退房日期預設是本日+1天
-          //jQuery的方法需在啟動之後才能使用
-          $(this).datepicker("setDate", +1);
-        });
-        
-      })
       index_room_list = document.querySelector(".index-room-list");
       serchRoom_submit = document.querySelector(".serchRoom-submit"); 
       //要傳送給rooms頁的數值預設為0
       window.localStorage.setItem("bookAdults",0);
+      window.localStorage.setItem("bookKids",0);
       window.localStorage.setItem("bookKids",0);
 
       
@@ -197,22 +214,6 @@ let getdata = {
     } else if (path.indexOf("/rooms.html") != -1) {
       //rooms節點
       console.log(this);
-      $(document).ready(function(){
-        $('.inDate').each(function(index){
-          $(this).datepicker();
-          $(this).datepicker("setDate", new Date());
-        });
-        $(".outDate").each(function(index){
-          //設定退房日期選擇最大限制是本日+90天
-           //設定退房日期選擇最小限制是本日+1天
-          //jQuery的datePicker設定ㄓ有分初始設定及後來更改,寫法不同
-          $(this).datepicker({minDate: 1,maxDate: "+90d"});
-          //設定退房日期預設是本日+1天
-          //jQuery的方法需在啟動之後才能使用
-          $(this).datepicker("setDate", +1);
-        });
-        
-      })
       rooms_roomList = document.querySelector(".rooms_roomList");
       loading_screen = document.querySelector(".loading-screen");
       let room_serch = document.querySelector(".bookroom-submit");
@@ -220,13 +221,16 @@ let getdata = {
       let rooms_serchingOut_Num = document.querySelector(".serchingOut-Num");
       loading_screen = document.querySelector(".loading-screen");
       loading_screen_classList = document.querySelector(".loading-screen").getAttribute("class");
-
       
-      let indexSerch_adults;
-      let indexSerch_kids;
+
+      //從localstorage取出首頁儲存的搜尋日期並設定datepicker日期
+      $(document).ready(function(){
+        $('.inDate').datepicker("setDate", window.localStorage.getItem("inDate"));
+        $('.outDate').datepicker("setDate", window.localStorage.getItem("outDate"));
+     });
       //將localstorage取出的值轉回原本的整數
-      indexSerch_adults = JSON.parse(window.localStorage.getItem("bookAdults"));
-      indexSerch_kids = JSON.parse(window.localStorage.getItem("bookKids"));
+      let indexSerch_adults = JSON.parse(window.localStorage.getItem("bookAdults"));
+      let indexSerch_kids = JSON.parse(window.localStorage.getItem("bookKids"));
       //讀取是否有首頁搜尋的欄位數值是否為0,若否則改變bookAdultsNum/bookAdultsNum/serchNum的數值
       if(indexSerch_adults != 0){
         bookAdultsNum = indexSerch_adults;
@@ -298,6 +302,7 @@ let getdata = {
               roomsDetailArray[no].normalDayPrice.toLocaleString()
             );
           }
+
           window.localStorage.setItem("bookStartValue", inDateDOM[0].value);
           window.localStorage.setItem("bookEndDateValue", outDateDOM[0].value);
           window.location.href = "booking.html";
@@ -319,10 +324,9 @@ let getdata = {
       bookRoomNameDOM.textContent = window.localStorage.getItem(
         "bookRoomNameValue"
       );
+      //由localstorage提取rooms頁儲存的資料，並設定datepicker的日期
       $(document).ready(function(){
-         $('.inDate').datepicker();
          $('.inDate').datepicker("setDate", window.localStorage.getItem("bookStartValue"));
-         $('.outDate').datepicker();
          $('.outDate').datepicker("setDate", window.localStorage.getItem("bookEndDateValue"));
       });
       bookPriceDOM.textContent = window.localStorage.getItem("bookPriceValue");
@@ -659,31 +663,17 @@ function getRoomsDetail(id) {
 
 //首頁資料初始化
 function indexPageRender(roomsdata) {
-  //取得首頁房間列表節點
-
   //新增row列
+  //將列渲染至畫面上,因為資料會換行,所以不需要多列
   let row_str = `<div class="indexRoomList-row row-5"></div>`;
   let col_str = "";
-  let datalength = roomsdata.length;
-  //依據資料長度,一列會有3筆資料,因此需要datalength/3個列,但因已經有基底字串,因此-1
-  for (i = 0; i < datalength / 3 - 1; i++) {
-    row_str += `<div class="indexRoomList-row row-5"></div>`;
-  }
-  //將列渲染至畫面上
-  console.log(this);
   index_room_list.innerHTML = row_str;
-  //取得所有的row節點
-  let indexRoomList_row = document.querySelectorAll(".indexRoomList-row");
-  console.log(`新增row${indexRoomList_row[0]}`);
-  //進行字串相加時row col判斷值
-  let col_num = 1;
-  let row_num = 0;
+  //取得row節點
+  let indexRoomList_row = document.querySelector(".indexRoomList-row");
   let no = 0;
 
   roomsdata.forEach(function (item, index) {
-    console.log(`此時渲染的row=${row_num},col=${col_num}`);
-    console.log(col_str);
-    indexRoomList_row[row_num].innerHTML += `
+    indexRoomList_row.innerHTML += `
       <div class="indexRoomList-col col-5-4 col-md-5-6 col-sm-5-12">
          <a href="" class="relative d-block text-light roomCard">
             <img src=${item.imageUrl} alt="" class="w-100 h-100">
@@ -692,15 +682,25 @@ function indexPageRender(roomsdata) {
            </div>
          </a>
        </div>`;
-    // 如果col=3 ,則至下一個row渲染,且欄位數回歸1
-    if (col_num == 3) {
-      row_num += 1;
-      col_num = 1;
-    } else {
-      col_num++;
-    }
+    
     no++;
   });
+
+  //進行字串相加時row col判斷值
+  // let col_num = 1;
+  // let row_num = 0;
+  // let datalength = roomsdata.length;
+  // //依據資料長度,一列會有3筆資料,因此需要datalength/3個列,但因已經有基底字串,因此-1
+  // for (i = 0; i < datalength / 3 - 1; i++) {
+  //   row_str += `<div class="indexRoomList-row row-5"></div>`;
+  // }
+  // 如果col=3 ,則至下一個row渲染,且欄位數回歸1
+  // if (col_num == 3) {
+  //   row_num += 1;
+  //   col_num = 1;
+  // } else {
+  //   col_num++;
+  // }
   
 }
 //modal資料渲染
